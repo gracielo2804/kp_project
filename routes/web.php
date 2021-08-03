@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 
 //Login dan Register
-Route::get('/login', function () {
-    return view('login');
-})->name("login");
+Route::get('/logincust', function () {
+    return view('loginCustomer');
+})->name("loginCustomer");
+Route::get('/loginadm', function () {
+    return view('loginAdmin');
+})->name("loginAdmin");
 // Route::post('/log', 'mctrl@log');
 Route::post('/login', 'registerController@login');
 Route::post('/register','registerController@register');
@@ -27,5 +30,5 @@ Route::get('/register',function(){
 })->name('register');
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('loginCustomer');
 });
