@@ -37,7 +37,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register</title>
+    <title>Email Verification</title>
 {{-- </head>
 <body>
     <h2>Login</h2>
@@ -76,25 +76,10 @@
     <body style="background-color:rgb(51, 51, 51)">
 
         <div class="container justify-content-center p-5" style="background-color:rgb(161, 161, 161);color:white;border-radius:5px;margin-top:5%;width:700px">
-            <h2><center>Register</center></h2>            
-                @if ($errors->any())
-                <div class="alert alert-danger" role="alert">
-                    <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                    </ul>
-                </div>
-                @endif
-                @if (session()->has("errorrr"))
-                <div class="alert alert-danger" role="alert">
-                <ul>
-                    <li>Username Sudah Digunakan</li>
-                </ul>
-                </div>
-                @endif
+            <h2><center>Email Verification</center></h2>            
+            <center>Code sent to <span id='emailtoverif'><strong>{{ (session()->get('verifemail')!=null) ? session()->get('verifemail'):old('email') }}</strong></span></center>               
             
-            <form action="/register" method="post">
+            <form action="/verifemail" method="post">
                 @csrf
                 {{-- <div class="form-group">
                     Register Sebagai : 
@@ -110,41 +95,21 @@
                     </div>
                 </div> --}}
               
-                <div class="form-group">Username : <input type="text" name="username" id="username" class='form-control' value={{old('username')}}>
-                    <span id='messageusername'></span>
-                </div>
-                <div class="form-group">Name : <input type="text" name="name" id="" class='form-control' value={{old('name')}}></div>                
-                <div class="form-group">Email : <input type="text" name="email" id="" class='form-control' value={{old('email')}}></div>                
-                <div class="form-group">Password : <input type="password" name="pass" id="pass" class='form-control' value={{old('pass')}} ></div>                
-                <div class="form-group">Confirmation Password : <input type="password" name="conpass" id="conpass" class='form-control'  value={{old('conpass')}}>
-                    <span id='message'></span>
-                </div>
-                <div class="form-group">PIN : <input type="password" name="pin" id="pin" class='form-control' placeholder="6 - Digits Number" value={{old('pin')}} ></div>                
-                <div class="form-group">Phone Number : <input type="text" name="phone" id="phone" class='form-control' placeholder="ex : 0812312312312" value={{old('phone')}}  ></div>                
-               
-                <div class="form-group">
-                    Bank Name : 
-                    <div class="select-wrap one-third">
-                       <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                       <select name="nama_bank" id="" class="form-control" placeholder="Keyword search" >
-                         <option value="">Select your bank name</option>
-                         <option value="BCA">BCA</option>
-                         <option value="Mandiri">Mandiri</option>
-                         <option value="BNI">BNI</option>
-                         <option value="BRI">BRI</option>                        
-                       </select>
-                    </div>     
-                </div>            
-                <div class="form-group">Bank Account Number : <input type="text" name="norek" id="norek" class='form-control' value={{old('norek')}} ></div> 
-                <div class="form-group">Bank Account Name : <input type="text" name="an_bank" id="an_bank" class='form-control' value={{old('an_bank')}} ></div>                               
-                <a href="/logincust"><button type="button" name="btntoLogin" class="btn btn-info">To Login</button></a>
-                <a href=""><button type="submit" name="btnRegister" class="btn btn-success">Register</button></a> 
+                <div class="form-group">Verification Code : <input type="text" name="vercode" id="vercode" class='form-control' value={{old('vercode')}}>
+                    @if (session()->has("errorcode"))
+                        <span style=color:red>{{session()->get('errorcode')}}</span>
+                    @endif
+                
+                </div>                
+                <input type="hidden" name="email" id="email" class='form-control' value={{ (session()->get('verifemail')!=null) ? session()->get('verifemail'):old('email') }}>             
+                <button type="submit" name="action" value="resend" class="btn btn-info">Resend Code</button>
+                <button type="submit" name="action" value="submit" class="btn btn-success">Submit</button>
             </form>
         </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <script>
+        {{-- <script>
             $(document).ready(function(){
                 $('#pass, #conpass').on('keyup', function () {
                 if ($('#pass').val() == $('#conpass').val()) {
@@ -159,28 +124,6 @@
                     if($(this).val().length > 6) {
                         $(this).val($(this).val().substr(0,$(this).val().length-1))
                     };
-                });
-                $('#username').on('blur',function(){
-                    console.log('test');
-                    $.ajax({
-                        method:'get',
-                        url:'/ajaxUsernameCustomer/'+$('#username').val(),
-                        success:function(res){      
-                            if(res.length==0){
-                                $('#messageusername').html('You can use this username').css('color', 'green');
-                            }
-                            else{
-                                $('#messageusername').html('Username Already Used').css('color', 'red');
-                            }
-                            console.log(res);
-                        // res.forEach(element => {
-                        //     $('#asalbandara').val(element.bandara_asal);
-                        //     $('#tujuanbandara').val(element.bandara_tujuan);
-                        //     $('#durasiflight').val(element.durasi);
-                        //     $('#hargaflight').val(element.harga);
-                        // });
-                        }                
-                    });
                 });
             });               
             
@@ -207,6 +150,6 @@
                     });
                 });
             };     
-        </script>
+        </script> --}}
     </body>
 </html>

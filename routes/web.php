@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,18 +17,35 @@ use Illuminate\Support\Facades\Route;
 
 //Login dan Register
 Route::get('/logincust', function () {
+    Session::remove('verifemail');
+    Session::remove('usernameverif');
     return view('loginCustomer');
 })->name("loginCustomer");
+Route::post('/logincust',  'loginController@login');
+
 Route::get('/loginadm', function () {
     return view('loginAdmin');
 })->name("loginAdmin");
-// Route::post('/log', 'mctrl@log');
-Route::post('/login', 'registerController@login');
+// Route::post('/login', 'registerController@login');
 Route::post('/register','registerController@register');
 
 Route::get('/register',function(){
     return view('register');
 })->name('register');
+
+Route::get('/verifemail', function () {
+    if(Session::has('verifemail')){
+        return view('verifemail');
+    }
+    else{
+        return redirect()->back();
+    }
+    
+})->name('verifemail');
+
+Route::post('/verifemail','registerController@verifemail');
+Route::get('/ajaxUsernameCustomer/{param}','registerController@cekUsernameCustomer');
+
 
 Route::get('/', function () {
     return redirect()->route('loginCustomer');
