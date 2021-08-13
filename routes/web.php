@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Login dan Register
+//Login,Loguout, dan Register
 Route::get('/logincust', function () {
     Session::remove('verifemail');
     Session::remove('usernameverif');
@@ -45,6 +45,20 @@ Route::get('/verifemail', function () {
 
 Route::post('/verifemail','registerController@verifemail');
 Route::get('/ajaxUsernameCustomer/{param}','registerController@cekUsernameCustomer');
+Route::get('/logout','loginController@logout');
+
+
+//CUSTOMER
+Route::get('/homecust',function(){
+    if(Session::has('custLog')){
+        return view('index');;
+    }
+    else{
+        return redirect()->back();
+    }
+    
+})->name('homecust');
+
 
 
 Route::get('/', function () {

@@ -5,24 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
-{{-- </head>
-<body>
-    <h2>Login</h2>
-    @if(session()->has("errorrr"))
-        <ul>
-            <li>{{session()->get("errorrr")}}</li>
-        </ul>
-    @endif
-    <form action="/" method="post">
-        @csrf
-        Username : <input type="text" name="username" id=""><br>
-        Password : <input type="password" name="pass" id=""><br>
-        <a href="/register"><button type="button" name="btntoRegister">To Register</button></a>
-        <a href=""><button type="submit" name="btnLogin">Login</button></a> 
-    </form>
-    
-</body>
-</html> --}}
 <!doctype html>
 <html lang="en">
     <head>
@@ -49,6 +31,7 @@
                     <li>{{session()->get("errorrr")}}</li>
                 </ul>
             @endif
+            @include('alert')
             <form action="/logincust" method="post">
                 @csrf
                 <div class="form-group">Username : <input type="text" name="username" id="" class='form-control'></div>

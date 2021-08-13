@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use App\Models\ConfirmEmail;
 
 class loginController extends Controller
@@ -15,11 +16,11 @@ class loginController extends Controller
         $pass=$request['pass'];        
         $customer = Customer::where('username_customer',$username)->first();
         if($customer==null){
-            return redirect()->back()->with(['errorcode'=>'Incorrect Username or Password ']);
+            return redirect()->back()->with(['error'=>'Incorrect Username or Password ']);
         }
         else{
             if(!password_verify($pass,$customer['password_customer'])){
-                return redirect()->back()->with(['errorcode'=>'Incorrect Username or Password ']);
+                return redirect()->back()->with(['error'=>'Incorrect Username or Password ']);
             }
             else{
                 if($customer['verif_email']==1){
@@ -43,10 +44,16 @@ class loginController extends Controller
                     return redirect()->route('verifemail');
                 }
                 else{
+                    $request->session()->put('custLog',$customer);
+                    return redirect()->route('homecust');
                     //Kalo Customer udh verif
                 }
             }
         }
         
+    }
+    function logout(){
+        Session::remove('custLog');
+        return redirect()->route('loginCustomer');
     }
 }
