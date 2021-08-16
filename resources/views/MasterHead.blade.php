@@ -37,8 +37,8 @@
 
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-              <li class="nav-item"><a href="paket" class="nav-link">Paket Tour</a></li>
+              <li class="nav-item"><a href="/homecust" class="nav-link">Home</a></li>
+              <li class="nav-item"><a href="/deposit" class="nav-link">Deposit</a></li>
               
               {{-- <li class="nav-item"><a href="blog" class="nav-link">Artikel Ziarah</a></li>
               <li class="nav-item">
@@ -46,7 +46,9 @@
               </li> --}}
               <li class="nav-item"><a href="about" class="nav-link">About</a></li>
               @if (Session::has("custLog"))
-              <li class="nav-item"><p class="nav-link">Hello ,{{Session::get('custLog')['nama_customer']}}</p></li>
+              <li class="nav-item"><p class="nav-link">Hello, {{Session::get('custLog')['nama_customer']}}<br>Saldo : Rp. <span id="saldo">{{Session::get('custLog')['saldo']}}</span></p>
+                <input type="hidden" id="username" value={{Session::get('custLog')['username_customer']}}>
+              </li>
               <li class="nav-item cta"><a href="logout" class="nav-link"><span>Log Out</span></a></li>
               @else
               <li class="nav-item cta"><a href="login" class="nav-link"><span>Login</span></a></li>
@@ -123,7 +125,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!-- loader -->
 <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
-
 <script src="{{ asset('asset_sementara/js/jquery.min.js')}}"></script>
 <script src="{{ asset('asset_sementara/js/jquery-migrate-3.0.1.min.js')}}"></script>
 <script src="{{ asset('asset_sementara/js/popper.min.js')}}"></script>
@@ -141,6 +142,27 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <script src="{{ asset('asset_sementara/js/google-map.js')}}"></script>
 <script src="{{ asset('asset_sementara/js/main.js')}}"></script>
-
+<script>
+  $(document).ready(function(){
+    console.log($('#username').val())
+    $(window).bind("beforeunload", function(){
+      if($('#username').val()!=""){
+        $.ajax({
+            method:'get',
+            url:'/ajaxRefreshSession/'+$('#username').val(),
+            success:function(res){                                                             
+                
+            }                
+        });
+      }
+    });
+    
+    // console.log('/ajaxRefreshSession/'+$('#username').text());
+    // console.log($('#username').text())
+    //  $('#saldo').ready(function(){     
+      
+    //  })
+  });
+</script>
 </body>
 </html>

@@ -45,19 +45,20 @@ Route::get('/verifemail', function () {
 
 Route::post('/verifemail','registerController@verifemail');
 Route::get('/ajaxUsernameCustomer/{param}','registerController@cekUsernameCustomer');
+Route::get('/ajaxRefreshSession/{param}','customerController@refreshSession');
 Route::get('/logout','loginController@logout');
 
 
 //CUSTOMER
-Route::get('/homecust',function(){
-    if(Session::has('custLog')){
-        return view('index');;
-    }
-    else{
-        return redirect()->back();
-    }
-    
-})->name('homecust');
+Route::middleware("authCustomer")->group(function(){
+    Route::get('/homecust',function(){
+        return view('index');
+    })->name('homecust');
+    Route::get('/deposit',function(){
+        return view('deposit');        
+    })->name('deposit');  
+});
+ 
 
 
 
