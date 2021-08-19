@@ -54,9 +54,11 @@ Route::middleware("authCustomer")->group(function(){
     Route::get('/homecust',function(){
         return view('index');
     })->name('homecust');
-    Route::get('/deposit',function(){
-        return view('deposit');        
-    })->name('deposit');  
+    //Deposit
+    Route::get('/deposit','customerController@depositPage')->name('deposit');  
+    Route::post('/deposit','customerController@deposit');  
+    //HistoryDeposit
+    Route::get('/hisDeposit','customerController@hisDepositPage')->name('hisDeposit');  
 });
  
 

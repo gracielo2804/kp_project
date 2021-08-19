@@ -33,6 +33,7 @@
         Author: TemplateMag.com
         License: https://templatemag.com/license/
     ======================================================= -->
+    @stack('css')
 </head>
 
 <body>
@@ -42,9 +43,9 @@
             *********************************************************************************************************************************************************** -->
         <!--header start-->
         <header class="header black-bg">
-            <div class="sidebar-toggle-box">
+            {{-- <div class="sidebar-toggle-box">
                 <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-            </div>
+            </div> --}}
         <!--logo start-->
             <a href="index.html" class="logo"><b>Pray &<span>Go</span></b></a>
             <!--logo end-->
@@ -62,54 +63,54 @@
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
-                <h5 class="centered">Welcome,Admin</h5>
-                {{-- <li class="mt">
-                    <a class="{{ (url()->current() == url("/admin/index")) ? 'active' : '' }}" href="index">
-                    <i class="fa fa-dashboard"></i>
-                    <span>Home</span>
-                    </a>
-                </li> --}}
-                <li class="sub-menu">
-                    <a class="{{ (url()->current() == url("/admin/paket")) ? 'active' : '' }}" href="/admin/paket">
-                    <i class="fa fa-tasks"></i>
-                    <span>Paket</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a class="{{ (url()->current() == url("/admin/listHotel")) ? 'active' : '' }}" href="/admin/listHotel">
-                    <i class="fa fa-hospital-o"></i>
-                    <span>Hotel</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a class="{{ (url()->current() == url("/admin/listPesawat")) ? 'active' : '' }}" href="/admin/listPesawat">
-                    <i class=" fa fa-plane"></i>
-                    <span>Pesawat</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a class="{{ (url()->current() == url("/admin/listCustomer")) ? 'active' : '' }}" href="/admin/listCutomer">
-                    <i class=" fa fa-users"></i>
-                    <span>Customer</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a class="{{ (url()->current() == url("/admin/laporan")) ? 'active' : '' }}" href="/admin/laporan">
-                    <i class=" fa fa-users"></i>
-                    <span>Laporan Penjualan</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <ul class="sub">
-                      <li><a class="{{ (url()->current() == url("/admin/laporan")) ? 'active' : '' }}" href="/admin/laporan">Laporan Penjualan</a></li>
-                    </ul>
-                  </li>
-                  <li class="sub-menu">
-                    <a href="/admin/chat">
-                      <i class="fa fa-comments-o"></i>
-                        <span>Chat Room</span>
-                      </a>
-                  </li>
+                    <h5 class="centered">Welcome,Admin</h5>
+                    {{-- <li class="mt">
+                        <a class="{{ (url()->current() == url("/admin/index")) ? 'active' : '' }}" href="index">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Home</span>
+                        </a>
+                    </li> --}}
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/deposit")) ? 'active' : '' }}" href="/deposit">
+                        <i class="fa fa-tasks"></i>
+                        <span>Deposit</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/hisDeposit")) ? 'active' : '' }}" href="/hisDeposit">
+                        <i class="fa fa-hospital-o"></i>
+                        <span>History Deposit</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/admin/listPesawat")) ? 'active' : '' }}" href="/admin/listPesawat">
+                        <i class=" fa fa-plane"></i>
+                        <span>Pesawat</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/admin/listCustomer")) ? 'active' : '' }}" href="/admin/listCutomer">
+                        <i class=" fa fa-users"></i>
+                        <span>Customer</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/admin/laporan")) ? 'active' : '' }}" href="/admin/laporan">
+                        <i class=" fa fa-users"></i>
+                        <span>Laporan Penjualan</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <ul class="sub">
+                        <li><a class="{{ (url()->current() == url("/admin/laporan")) ? 'active' : '' }}" href="/admin/laporan">Laporan Penjualan</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="/admin/chat">
+                        <i class="fa fa-comments-o"></i>
+                            <span>Chat Room</span>
+                        </a>
+                    </li>
                 <!-- sidebar menu end-->
             </div>
         </aside>
@@ -134,6 +135,7 @@
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="{{ asset('asset_sementara/admin/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>
+    @stack('js')
     {{-- <script class="include" type="text/javascript" src="{{ asset('asset_sementara/admin/lib/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/jquery.scrollTo.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
