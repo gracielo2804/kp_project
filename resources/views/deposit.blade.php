@@ -62,7 +62,7 @@
                             <a href="#" id="pop"><img src="" id="preview" class="img-thumbnail"></a>
                         </div>
                         <div style="padding:30px;">
-                                <button class="btn btn-success" type="submit" id="btnDeposit">Deposit</button>
+                            <button class="btn btn-success" type="submit" id="btnDeposit">Deposit</button>
                         </div>
                 </form>
                 </div>                

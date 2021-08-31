@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\listBank;
 use App\Models\historyDeposit;
+use App\Models\ListEditProfile;
 
 class customerController extends Controller
 {
@@ -67,9 +68,53 @@ class customerController extends Controller
         return redirect()->back()->with(['success'=>'Berhasil input data deposit, Tunggu konfirmasi admin']);
     }
 
-    public function hisDepositPage(){    
+    public function hisDepositPage(){ 
+        // dd(Session::get('custLog'));
         $data=historyDeposit::where('username_cust',Session::get('custLog')['username_customer'])->get();
         $dataBankTujuan=listBank::get();
         return view('historyDeposit',["data"=>$data,"databank"=>$dataBankTujuan]);
     }
+    public function editProfilePage(){         
+        $dataCustomer=Session::get('custLog');
+        $dataBankTujuan=listBank::get();
+        return view('editProfile',["dataCustomer"=>$dataCustomer]);
+    }
+
+    public function editProfile(Request $request){ 
+        $pass=$request['passwordsekarang'];        
+        if(!password_verify($pass,Session::get('custLog')['password_customer'])){
+            return redirect()->back()->with(['error'=>'Incorrect Password ']);
+        }
+        else{
+            $DataSebelum=ListEditProfile::where('username_cust',$request->username)->get();
+            $jumlahData=$DataSebelum->count();
+            if($jumlahData>0){
+                $dataLama=ListEditProfile::where('username_cust',$request->username)->where('status',1)->get();
+                foreach($dataLama as $value){
+                    $value->status=4;
+                    $value->save();
+                }
+            }
+            if($request->newpassword!=""||$request->newpassword!=null){
+                $pass==password_hash($request->newpassword,PASSWORD_DEFAULT);                
+            }
+            else{
+                $pass=Session::get('custLog')['password_customer'];
+            }
+            ListEditProfile::insert([
+                "username_cust"=> $request->username,
+                "nama_cust"=>$request->username,
+                "telp_cust"=>$request->notelp,
+                "email_cust"=>$request->email,
+                "password_cust"=>$pass,
+                "namabank_cust"=>$request->nama_bank,
+                "norek_cust"=>$request->norek,
+                "an_cust"=>$request->an_bank,
+                "status"=>1
+            ]);
+            return redirect()->back()->with(['success'=>'Berhasil Melakukan Request Edit Profile ']);
+        }
+       
+    }
+
 }

@@ -43,15 +43,14 @@
             *********************************************************************************************************************************************************** -->
         <!--header start-->
         <header class="header black-bg">
-            {{-- <div class="sidebar-toggle-box">
-                <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-            </div> --}}
+                <div class="sidebar-toggle-box">
+                    <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+                </div>
         <!--logo start-->
-            <a href="index.html" class="logo"><b>Pray &<span>Go</span></b></a>
+            <a href="/homecust" class="logo"><b>Pray &<span>Go</span></b></a>
             <!--logo end-->
-
             <ul class="nav pull-right top-menu">
-                <a class="btn btn-danger btn-sm mt-3" href="/admin/logout">Logout</a>
+                <a class="btn btn-danger btn-sm mt-3" href="/logout">Logout</a>
             </ul>
         </header>
         <!--header end-->
@@ -70,6 +69,12 @@
                         <span>Home</span>
                         </a>
                     </li> --}}
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/editProfile")) ? 'active' : '' }}" href="/editProfile">
+                        <i class="far fa-id-card"></i>
+                        <span>Edit Profile</span>
+                        </a>
+                    </li>
                     <li class="sub-menu">
                         <a class="{{ (url()->current() == url("/deposit")) ? 'active' : '' }}" href="/deposit">
                         <i class="fa fa-tasks"></i>
@@ -129,13 +134,14 @@
         </footer>
     <!--footer end-->
     </section>
-    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
-    <!-- js placed at the end of the document so the pages load faster -->
     <script src="{{ asset('asset_sementara/admin/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>
     @stack('js')
+
+    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
+    <!-- js placed at the end of the document so the pages load faster -->    
     {{-- <script class="include" type="text/javascript" src="{{ asset('asset_sementara/admin/lib/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/jquery.scrollTo.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/jquery.nicescroll.js') }}" type="text/javascript"></script>

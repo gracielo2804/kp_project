@@ -113,21 +113,21 @@
                 <div class="form-group">Username : <input type="text" name="username" id="username" class='form-control' value={{old('username')}}>
                     <span id='messageusername'></span>
                 </div>
-                <div class="form-group">Name : <input type="text" name="name" id="" class='form-control' value={{old('name')}}></div>                
+                <div class="form-group">Nama : <input type="text" name="name" id="" class='form-control' value={{old('name')}}></div>                
                 <div class="form-group">Email : <input type="text" name="email" id="" class='form-control' value={{old('email')}}></div>                
                 <div class="form-group">Password : <input type="password" name="pass" id="pass" class='form-control' value={{old('pass')}} ></div>                
-                <div class="form-group">Confirmation Password : <input type="password" name="conpass" id="conpass" class='form-control'  value={{old('conpass')}}>
+                <div class="form-group">Konfirmasi Password : <input type="password" name="conpass" id="conpass" class='form-control'  value={{old('conpass')}}>
                     <span id='message'></span>
                 </div>
                 <div class="form-group">PIN : <input type="password" name="pin" id="pin" class='form-control' placeholder="6 - Digits Number" value={{old('pin')}} ></div>                
-                <div class="form-group">Phone Number : <input type="text" name="phone" id="phone" class='form-control' placeholder="ex : 0812312312312" value={{old('phone')}}  ></div>                
+                <div class="form-group">Nomor Telepon : <input type="text" name="phone" id="phone" class='form-control' placeholder="ex : 0812312312312" value={{old('phone')}}  ></div>                                
                
                 <div class="form-group">
-                    Bank Name : 
+                    Nama Bank : 
                     <div class="select-wrap one-third">
                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                        <select name="nama_bank" id="" class="form-control" placeholder="Keyword search" >
-                         <option value="">Select your bank name</option>
+                         <option value="">Pilih Nama Bank</option>
                          <option value="BCA">BCA</option>
                          <option value="Mandiri">Mandiri</option>
                          <option value="BNI">BNI</option>
@@ -135,8 +135,8 @@
                        </select>
                     </div>     
                 </div>            
-                <div class="form-group">Bank Account Number : <input type="text" name="norek" id="norek" class='form-control' value={{old('norek')}} ></div> 
-                <div class="form-group">Bank Account Name : <input type="text" name="an_bank" id="an_bank" class='form-control' value={{old('an_bank')}} ></div>                               
+                <div class="form-group">Nomer Rekening Bank : <input type="text" name="norek" id="norek" class='form-control' value={{old('norek')}} ></div> 
+                <div class="form-group">Nama Rekening Bank : <input type="text" name="an_bank" id="an_bank" class='form-control' value={{old('an_bank')}} ></div>                               
                 <a href="/logincust"><button type="button" name="btntoLogin" class="btn btn-info">To Login</button></a>
                 <a href=""><button type="submit" name="btnRegister" class="btn btn-success">Register</button></a> 
             </form>
@@ -150,7 +150,7 @@
                 if ($('#pass').val() == $('#conpass').val()) {
                     $('#message').html('').css('color', 'green');
                 } else 
-                    $('#message').html('The password must be the same as the confirmation password').css('color', 'red');
+                    $('#message').html('Password harus sama dengan konfirmasi password').css('color', 'red');
                 });
                 $('#pin').ForceNumericOnly();
                 $('#phone').ForceNumericOnly();
@@ -167,10 +167,10 @@
                         url:'/ajaxUsernameCustomer/'+$('#username').val(),
                         success:function(res){      
                             if(res.length==0){
-                                $('#messageusername').html('You can use this username').css('color', 'green');
+                                $('#messageusername').html('Username ini bisa digunakan').css('color', 'green');
                             }
                             else{
-                                $('#messageusername').html('Username Already Used').css('color', 'red');
+                                $('#messageusername').html('Username sudah digunakan').css('color', 'red');
                             }
                             console.log(res);
                         // res.forEach(element => {

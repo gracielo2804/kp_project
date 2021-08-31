@@ -44,7 +44,7 @@
               <li class="nav-item">
                   <a href="contact" class="nav-link">Contact</a>
               </li> --}}
-              <li class="nav-item"><a href="about" class="nav-link">About</a></li>
+              <li class="nav-item"><a href="/editProfile" class="nav-link">Edit Profile</a></li>
               @if (Session::has("custLog"))
               <li class="nav-item"><p class="nav-link">Hello, {{Session::get('custLog')['nama_customer']}}<br>Saldo : Rp. <span id="saldo">{{Session::get('custLog')['saldo']}}</span></p>
                 <input type="hidden" id="username" value={{Session::get('custLog')['username_customer']}}>

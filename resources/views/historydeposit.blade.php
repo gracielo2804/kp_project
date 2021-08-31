@@ -20,37 +20,42 @@
                             <tr><th>ID</th><th>Tanggal</th><th>Tujuan Transfer</th><th>Bukti Transfer</th><th>Status</th><th>Keterangan</th></tr>
                         </thead>
                         <tbody>
-                            @foreach($data as $d) 
-                                <tr>
-                                    <td>{{ $d->id_depo }}</td>
-                                    {{-- <td>{{ $d["id"] }}</td> --}}
-                                    <td>{{ $d->tanggal_depo }}</td>
-                                    <td>
-                                        @foreach ($databank as $item)
-                                            @if($d->id_bank_tujuan==$item->id)
-                                                {{$item->namabank_admin." - ".$item->no_rek." - ".$item->atas_nama}}
+                            @if ($data->count()==0)
+                                <td colspan="6"><center><b>No Data<b></center></td>
+                            @else
+                                @foreach($data as $d) 
+                                    <tr>
+                                        <td>{{ $d->id_depo }}</td>
+                                        {{-- <td>{{ $d["id"] }}</td> --}}
+                                        <td>{{ $d->tanggal_depo }}</td>
+                                        <td>
+                                            @foreach ($databank as $item)
+                                                @if($d->id_bank_tujuan==$item->id)
+                                                    {{$item->namabank_admin." - ".$item->no_rek." - ".$item->atas_nama}}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <a href="#" class="pop" src="{{asset($d->bukti_trf)}}">
+                                                <img src="{{asset($d->bukti_trf)}}" id="preview" class="img-thumbnail" width="150" height="200">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if($d->status==1)
+                                                <p class="btn btn-warning">Pending
+                                            @elseif($d->status==2)
+                                                <p class="btn btn-success">Success
+                                            @elseif($d->status==3)
+                                                <p class="btn btn-danger">Ditolak
                                             @endif
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        <a href="#" class="pop" src="{{asset($d->bukti_trf)}}">
-                                            <img src="{{asset($d->bukti_trf)}}" id="preview" class="img-thumbnail" width="150" height="200">
-                                        </a>
-                                    </td>
-                                    <td>
-                                        @if($d->status==1)
-                                            <p class="btn btn-warning">Pending
-                                        @elseif($d->status==2)
-                                            <p class="btn btn-success">Success
-                                        @elseif($d->status==3)
-                                            <p class="btn btn-danger">Ditolak
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {{$d->keterangan}}
-                                    </td>
-                                </tr>
-                            @endforeach
+                                        </td>
+                                        <td>
+                                            {{$d->keterangan}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            
                         </tbody>
                     </table>             
                 </div>       

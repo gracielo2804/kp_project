@@ -17,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 //Login,Loguout, dan Register
 Route::get('/logincust', function () {
-    Session::remove('verifemail');
-    Session::remove('usernameverif');
-    return view('loginCustomer');
+    if(Session::has('custLog')){
+        return redirect()->route('homecust');
+    }
+    else{    
+        Session::remove('verifemail');
+        Session::remove('usernameverif');
+        return view('loginCustomer');
+    }    
 })->name("loginCustomer");
 Route::post('/logincust',  'loginController@login');
 
@@ -59,6 +64,8 @@ Route::middleware("authCustomer")->group(function(){
     Route::post('/deposit','customerController@deposit');  
     //HistoryDeposit
     Route::get('/hisDeposit','customerController@hisDepositPage')->name('hisDeposit');  
+    Route::get('/editProfile','customerController@editProfilePage')->name('editProfile');  
+    Route::post('/editProfile','customerController@editProfile');  
 });
  
 
