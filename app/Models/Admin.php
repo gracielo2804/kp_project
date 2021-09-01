@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Admin extends Model
 {
-    protected $table ='customer';
-    protected $primaryKey = 'username_customer';
+    protected $table ='admin';
+    protected $primaryKey = 'username';
     public $incrementing = false;
     public $keyType = 'varchar';
     public $timestamps = false;

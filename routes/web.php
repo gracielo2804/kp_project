@@ -27,10 +27,10 @@ Route::get('/logincust', function () {
     }    
 })->name("loginCustomer");
 Route::post('/logincust',  'loginController@login');
-
-Route::get('/loginadm', function () {
-    return view('loginAdmin');
+Route::get('/loginadmin', function () {
+    return view('loginadmin');
 })->name("loginAdmin");
+Route::post('/loginadmin','loginController@loginadmin');
 // Route::post('/login', 'registerController@login');
 Route::post('/register','registerController@register');
 
@@ -69,7 +69,13 @@ Route::middleware("authCustomer")->group(function(){
 });
  
 
-
+//Owner
+Route::get('/homewner',function(){
+    echo('ini halaman owner');
+})->name('homeowner');
+Route::get('/homeadmin',function(){
+    echo('ini halaman admin');
+})->name('homeadmin');
 
 Route::get('/', function () {
     return redirect()->route('loginCustomer');

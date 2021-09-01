@@ -4,25 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-{{-- </head>
-<body>
-    <h2>Login</h2>
-    @if(session()->has("errorrr"))
-        <ul>
-            <li>{{session()->get("errorrr")}}</li>
-        </ul>
-    @endif
-    <form action="/" method="post">
-        @csrf
-        Username : <input type="text" name="username" id=""><br>
-        Password : <input type="password" name="pass" id=""><br>
-        <a href="/register"><button type="button" name="btntoRegister">To Register</button></a>
-        <a href=""><button type="submit" name="btnLogin">Login</button></a> 
-    </form>
-    
-</body>
-</html> --}}
+    <title>Login Admin</title>
 <!doctype html>
 <html lang="en">
     <head>
@@ -43,20 +25,21 @@
     <body style="background-color:rgb(51, 51, 51)">
 
         <div class="container justify-content-center p-5" style="background-color:rgb(161, 161, 161);color:white;border-radius:5px;margin-top:5%;width:700px">
-            <h2><center>Login</center></h2>
+            <h2><center>Login Admin</center></h2>
             @if(session()->has("errorrr"))
                 <ul>
                     <li>{{session()->get("errorrr")}}</li>
                 </ul>
             @endif
-            <form action="/" method="post">
+            @include('alert')
+            <form action="/loginadmin" method="post">
                 @csrf
                 <div class="form-group">Username : <input type="text" name="username" id="" class='form-control'></div>
                 <div class="form-group">Password : <input type="password" name="pass" id="" class='form-control'></div>     
-                <input type="checkbox" name="checkremember" id="" value="checkremember">Remember Me<br><br>           
-                <a href="/register"><button type="button" name="btntoRegister" class="btn btn-info">To Register</button></a>
-                <a href=""><button type="submit" name="btnLogin" class="btn btn-success">Login</button></a> 
-                
+                <input type="checkbox" name="checkremember" id="" value="checkremember">Remember Me<br><br>                           
+                <a href="/logincust"><button type="button" name="btntoRegister" class="btn btn-info">To Customer Login</button></a>
+                <a href=""><button type="submit" name="btnLogin" class="btn btn-success">Login</button></a>                 
+
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

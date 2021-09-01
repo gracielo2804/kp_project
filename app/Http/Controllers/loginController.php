@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use App\Models\ConfirmEmail;
+use PDO;
 
 class loginController extends Controller
 {
@@ -49,8 +51,26 @@ class loginController extends Controller
                     //Kalo Customer udh verif
                 }
             }
+        }        
+    }
+    function loginadmin(Request $request){
+        $username=$request['username'];
+        $pass=$request['pass']; 
+        if($username=="owner_exim"&& $pass=="exim123"){
+            return redirect()->route('homeowner');
         }
-        
+        else{
+            $admin = Admin::where('username_admin',$username)->where('status',2)->first();
+            if($admin==null){
+                return redirect()->back()->with(['error'=>'Incorrect Username or Password ']);
+            }
+            else{
+                if(!password_verify($pass,$admin['password_admin'])){
+                    return redirect()->back()->with(['error'=>'Incorrect Username or Password ']);
+                }
+                return redirect()->route('homeadmin');
+            }
+        }
     }
     function logout(){
         Session::remove('custLog');
