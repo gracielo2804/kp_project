@@ -20,11 +20,11 @@ Route::get('/logincust', function () {
     if(Session::has('custLog')){
         return redirect()->route('homecust');
     }
-    else{    
+    else{
         Session::remove('verifemail');
         Session::remove('usernameverif');
         return view('loginCustomer');
-    }    
+    }
 })->name("loginCustomer");
 Route::post('/logincust',  'loginController@login');
 Route::get('/loginadmin', function () {
@@ -45,7 +45,7 @@ Route::get('/verifemail', function () {
     else{
         return redirect()->back();
     }
-    
+
 })->name('verifemail');
 
 Route::post('/verifemail','registerController@verifemail');
@@ -60,22 +60,59 @@ Route::middleware("authCustomer")->group(function(){
         return view('index');
     })->name('homecust');
     //Deposit
-    Route::get('/deposit','customerController@depositPage')->name('deposit');  
-    Route::post('/deposit','customerController@deposit');  
+    Route::get('/deposit','customerController@depositPage')->name('deposit');
+    Route::post('/deposit','customerController@deposit');
     //HistoryDeposit
-    Route::get('/hisDeposit','customerController@hisDepositPage')->name('hisDeposit');  
-    Route::get('/editProfile','customerController@editProfilePage')->name('editProfile');  
-    Route::post('/editProfile','customerController@editProfile');  
+    Route::get('/hisDeposit','customerController@hisDepositPage')->name('hisDeposit');
+    Route::get('/editProfile','customerController@editProfilePage')->name('editProfile');
+    Route::post('/editProfile','customerController@editProfile');
 });
- 
 
-//Owner
-Route::get('/homewner',function(){
-    echo('ini halaman owner');
-})->name('homeowner');
-Route::get('/homeadmin',function(){
-    echo('ini halaman admin');
-})->name('homeadmin');
+
+//Admin
+
+Route::get('/admin/list/aktifpaket/{id}','adminController@aktif_paket');
+Route::get('/admin/list/nonaktifpaket/{id}','adminController@nonaktif_paket');
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard','adminController@');
+    Route::prefix('list')->group(function () {
+
+        Route::get('/paketinvestasi','adminController@listPaket')->name('homeadmin');
+        Route::get('/addpaket','adminController@pageAddPaket');
+        Route::post('addpaket/new','adminController@confAddPaket');
+        Route::get('editpaket/{id}','adminController@edit_paketview');
+        Route::post('editpaket/submit','adminController@edit_paket');
+
+        Route::get('/admin','adminController@listadmin');
+
+        Route::get('/aktifadmin/{username}','adminController@aktif_admin');
+        Route::get('/nonaktifadmin/{username}','adminController@nonaktif_admin');
+        Route::get('/addadmin','adminController@pageAddAdmin');
+        Route::post('/addadmin/new','adminController@add_admin');
+        Route::get('/editadmin/{username}','adminController@edit_adminview');
+        Route::post('/editadmin/new','adminController@edit_admin');
+
+        Route::get('/customer','adminController@');
+    });
+    Route::prefix('pending')->group(function () {
+
+        Route::get('/deposit','adminController@pending_depo');
+        Route::get('/deposit/accept/{id}/{username}/{jumlah}','adminController@acc_pending_depo');
+        Route::post('/deposit/decline','adminController@dec_pending_depo');
+
+        Route::get('/withdrawal','adminController@pending_wd');
+        Route::post('/withdrawal/accept','adminController@acc_pending_wd');
+        Route::post('/withdrawal/decline','adminController@dec_pending_wd');
+
+        Route::get('/editprofile','adminController@pending_edit_profile');
+        Route::get('/request/accept/{user}/{pw}/{nama}/{telp}/{email}/{bank}/{rek}/{an}','adminController@acc_pending_edit_profile');
+        Route::post('/request/decline','adminController@dec_pending_edit_profile');
+    });
+    Route::get('/laporanpembelian','adminController@');
+    Route::get('/laporanwddepo','adminController@');
+    Route::get('/logadmin','adminController@logadmin');
+});
+
 
 Route::get('/', function () {
     return redirect()->route('loginCustomer');

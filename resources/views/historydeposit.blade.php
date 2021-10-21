@@ -10,11 +10,11 @@
 @section('body')
     <section id="main-content">
         <section class="wrapper">
-            <h3><!--<i class="fa fa-angle-right"></i> -->History Deposit</h3>    
-                        
+            <h3><!--<i class="fa fa-angle-right"></i> -->History Deposit</h3>
+
             <div class="row mt">
             <div class="col-lg-12">
-                <div class="form-panel">  
+                <div class="form-panel">
                     <table id="table" border="1px" class="table table-bordered">
                         <thead>
                             <tr><th>ID</th><th>Tanggal</th><th>Tujuan Transfer</th><th>Bukti Transfer</th><th>Status</th><th>Keterangan</th></tr>
@@ -23,7 +23,7 @@
                             @if ($data->count()==0)
                                 <td colspan="6"><center><b>No Data<b></center></td>
                             @else
-                                @foreach($data as $d) 
+                                @foreach($data as $d)
                                     <tr>
                                         <td>{{ $d->id_depo }}</td>
                                         {{-- <td>{{ $d["id"] }}</td> --}}
@@ -55,10 +55,10 @@
                                     </tr>
                                 @endforeach
                             @endif
-                            
+
                         </tbody>
-                    </table>             
-                </div>       
+                    </table>
+                </div>
                 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
@@ -74,14 +74,14 @@
                             </div>
                         </div>
                     </div>
-                </div>                         
+                </div>
             </div>
             <!-- col-lg-12-->
             </div>
             {{-- <div class="row mt">
                 <div class="col-lg-12">
                 <div class="form-panel">
-                    
+
                     <h4 class="mb"><i class="fa fa-angle-right"></i>Detail Paket</h4>
                     <form class="form-horizontal style-form" method="POST" action="addPaket">
                     @csrf
@@ -172,7 +172,7 @@
             </div> --}}
             <!-- /col-md-12 -->
             </div>
-            
+
             </div>
             </div>
             <!-- /row -->
@@ -191,15 +191,14 @@
   <!--common script for all pages-->
   @push('js')
   <script>
-    $(document).ready(function(){    
+    $(document).ready(function(){
          $(".pop").on("click", function() {
              $('#imagepreview').attr('src', $(this).attr('src')); // here asign the image to the modal when the user click the enlarge link
              $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-         });         
-     });     
+         });
+     });
 </script>
 @endpush
 
- 
+
   @endsection
- 
