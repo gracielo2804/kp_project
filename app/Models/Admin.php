@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     protected $table ='admin';
-    protected $primaryKey = 'username';
+    protected $primaryKey = 'username_admin';
     public $incrementing = false;
     public $keyType = 'varchar';
     public $timestamps = false;
