@@ -5,61 +5,84 @@
             visibility: hidden;
             position: absolute;
         }
-        .scrolledTable{ overflow-y: auto; clear:both; }
     </style>
 @endpush
 @section('body')
     <section id="main-content">
         <section class="wrapper">
-            <h3><!--<i class="fa fa-angle-right"></i> -->History Deposit</h3>
-
+            <h3><!--<i class="fa fa-angle-right"></i> -->Withdraw</h3>    
+            @if (session()->has("success"))
+                {{-- Kita tampilkan alert success nya! --}}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session()->get("success") }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif       
+            <!-- BASIC FORM ELELEMNTS -->
+            <span id="errorMsg"></span>
             <div class="row mt">
             <div class="col-lg-12">
                 <div class="form-panel">
-                    <table id="tablehisdepo" border="1px" class="table table-bordered">
-                        <thead>
-                            <tr><th>ID</th><th>Tanggal</th><th>Jumlah Deposit</th><th>Tujuan Transfer</th><th>Bukti Transfer</th><th>Status</th><th>Keterangan</th></tr>
-                        </thead>
-                        <tbody>
-                            @if ($data->count()==0)
-                                <td colspan="6"><center><b>No Data<b></center></td>
-                            @else
-                                @foreach($data as $d)
-                                    <tr>
-                                        <td>{{ $d->id_depo }}</td>
-                                        {{-- <td>{{ $d["id"] }}</td> --}}
-                                        <td>{{ $d->tanggal_depo }}</td>
-                                        <td>Rp. {{ number_format($d->jumlah_depo) }}</td>
-                                        <td>
-                                            @foreach ($databank as $item)
-                                                @if($d->id_bank_tujuan==$item->id)
-                                                    {{$item->namabank_admin." - ".$item->no_rek." - ".$item->atas_nama}}
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <a href="#" class="pop" src="{{asset($d->bukti_trf)}}">
-                                                <img src="{{asset($d->bukti_trf)}}" id="preview" class="img-thumbnail" width="150" height="200">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            @if($d->status==1)
-                                                <p class="btn btn-warning">Pending
-                                            @elseif($d->status==2)
-                                                <p class="btn btn-success">Success
-                                            @elseif($d->status==3)
-                                                <p class="btn btn-danger">Ditolak
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{$d->keterangan}}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
+                <form class="form-horizontal style-form" method="POST" action="/withdraw">
+                    @csrf
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">Withdraw Amount</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Rp</div>
+                                </div>
+                                <input type="number" step="1000" class="form-control" name="jumlahwithdraw" id="jumlahwithdraw"  value='{{old('jumlahwithdraw')}}' max={{$customer['saldo']}} required>                                
+                            </div>
+                        </div>
+                        <small id="emailHelp" class="form-text text-muted ml-3">Maximum Withdraw Ammount is Rp. {{number_format($customer['saldo'])}}</small>
+                    </div>
+                    <div class="form-group ml-3">
+                        Nama Bank : 
+                        <div class="select-wrap one-third">
+                           <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                           <select name="nama_bank" id="" class="form-control col-6" placeholder="Keyword search" >
+                                <option value="">Pilih Nama Bank</option>
+                                <option value="BCA">BCA</option>
+                                <option value="Mandiri">Mandiri</option>
+                                <option value="BNI">BNI</option>
+                                <option value="BRI">BRI</option>                        
+                           </select>
+                        </div>     
+                    </div>            
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">Nomor Rekening</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="norek" id="norek" value='{{$customer['norek_customer']}}' required>
+                        </div>     
+                    </div>     
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">Atas Nama</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="an" id="an" value='{{$customer['an_customer']}}' required>
+                        </div>     
+                    </div>     
+                    {{-- <div class="ml-2 col-sm-6">
+                        <div id="msg">Bukti Transfer</div>
+                        <input type="file" name="img" class="file" accept="image/*" id="inputGambar" required>
+                        <div class="input-group my-3">
+                            <input type="text" class="form-control" disabled placeholder="Upload File" id="file" required>
+                            <div class="input-group-append">
+                                <button type="button" class="browse btn btn-primary">Browse...</button>
+                            </div>
+                        </div>
+                    </div> --}}
+                    {{-- <div class="ml-2 col-sm-6">
+                        <a href="#" id="pop"><img src="" id="preview" class="img-thumbnail"></a>
+                    </div> --}}
+                        <div style="padding:30px;">
+                            <button class="btn btn-success" type="submit" id="btnDeposit">Withdraw</button>
+                        </div>
+                </form>
+                </div>                
+                <!-- Creates the bootstrap modal where the image will appear -->
                 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
@@ -82,7 +105,7 @@
             {{-- <div class="row mt">
                 <div class="col-lg-12">
                 <div class="form-panel">
-
+                    
                     <h4 class="mb"><i class="fa fa-angle-right"></i>Detail Paket</h4>
                     <form class="form-horizontal style-form" method="POST" action="addPaket">
                     @csrf
@@ -173,7 +196,7 @@
             </div> --}}
             <!-- /col-md-12 -->
             </div>
-
+            
             </div>
             </div>
             <!-- /row -->
@@ -190,32 +213,43 @@
   <script src="{{asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.min.js')}}"></script> --}}
 
   <!--common script for all pages-->
-  <script src="{{asset('asset_sementara/admin/lib/jquery/jquery.min.js')}}"></script>
-  <script src="{{asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.min.js')}}"></script>
   @push('js')
   <script>
-    $(document).ready(function(){
-        $("#tablehisdepo").DataTable({
-                retrieve: true,
-                paging: true,
-                lengthChange : true,
-                searching: true,
-                ordering: true,
-                bJQueryUI: true,
-                bStateSave: true,
-                iDisplayLength: 10,
-                aaSorting: [[4, "desc"], [5, "asc"]],
-                aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                sPaginationType: "full_numbers",
-            });
-            $('#tablehisdepo').wrap("<div class='scrolledTable'></div>");
-         $(".pop").on("click", function() {
-             $('#imagepreview').attr('src', $(this).attr('src')); // here asign the image to the modal when the user click the enlarge link
+    $(document).ready(function(){    
+         $('#jumlahwithdraw').ForceNumericOnly();  
+         $('#norek').ForceNumericOnly();  
+         $("#pop").on("click", function() {
+             $('#imagepreview').attr('src', $('#preview').attr('src')); // here asign the image to the modal when the user click the enlarge link
              $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-         });
-     });
+         });         
+     }); 
+
+     jQuery.fn.ForceNumericOnly =
+         function()
+         {
+             return this.each(function()
+             {
+                 $(this).keydown(function(e)
+                 {
+                     var key = e.charCode || e.keyCode || 0;
+                     // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers ONLY
+                     // home, end, period, and numpad decimal
+                     return (
+                         key == 8 || 
+                         key == 9 ||
+                         key == 13 ||
+                         key == 46 ||
+                         // key == 110 ||
+                         // key == 190 ||
+                         (key >= 35 && key <= 40) ||
+                         (key >= 48 && key <= 57) ||
+                         (key >= 96 && key <= 105));
+                 });
+             });
+         };              
 </script>
 @endpush
 
-
+ 
   @endsection
+ 

@@ -18,39 +18,52 @@
                 <div class="form-panel">
                     <table id="tablehisdepo" border="1px" class="table table-bordered">
                         <thead>
-                            <tr><th>ID</th><th>Tanggal</th><th>Jumlah Deposit</th><th>Tujuan Transfer</th><th>Bukti Transfer</th><th>Status</th><th>Keterangan</th></tr>
+                            <tr><th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Jumlah Withdraw</th>
+                                <th>Bank Tujuan</th>
+                                <th>Nomor Rekening</th>
+                                <th>Nama Rekening</th>
+                                <th>Status</th>
+                                <th>Bukti Transfer</th>
+                                <th>Keterangan</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @if ($data->count()==0)
-                                <td colspan="6"><center><b>No Data<b></center></td>
+                                <td colspan="9"><center><b>No Data<b></center></td>
                             @else
                                 @foreach($data as $d)
                                     <tr>
-                                        <td>{{ $d->id_depo }}</td>
+                                        <td>{{ $d->id_wd }}</td>
                                         {{-- <td>{{ $d["id"] }}</td> --}}
-                                        <td>{{ $d->tanggal_depo }}</td>
-                                        <td>Rp. {{ number_format($d->jumlah_depo) }}</td>
+                                        <td>{{ $d->tanggal_wd }}</td>
+                                        <td>Rp. {{ number_format($d->jumlah_wd) }}</td>                                        
+                                        <td>{{($d->bank_tujuan) }}</td>                                        
+                                        <td>{{ ($d->norek_tujuan) }}</td>                                        
+                                        <td>{{ ($d->an_norek_tujuan) }}</td>         
                                         <td>
-                                            @foreach ($databank as $item)
-                                                @if($d->id_bank_tujuan==$item->id)
-                                                    {{$item->namabank_admin." - ".$item->no_rek." - ".$item->atas_nama}}
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <a href="#" class="pop" src="{{asset($d->bukti_trf)}}">
-                                                <img src="{{asset($d->bukti_trf)}}" id="preview" class="img-thumbnail" width="150" height="200">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            @if($d->status==1)
+                                            @if($d->status_wd==1)
                                                 <p class="btn btn-warning">Pending
-                                            @elseif($d->status==2)
+                                            @elseif($d->status_wd==2)
                                                 <p class="btn btn-success">Success
-                                            @elseif($d->status==3)
+                                            @elseif($d->status_wd==3)
                                                 <p class="btn btn-danger">Ditolak
                                             @endif
+                                        </td>                               
+                                        <td>
+                                            @if($d->status_wd==1)
+                                                Menunggu Transfer dari admin
+                                            @elseif($d->status_wd==2)
+                                                <a href="#" class="pop" src="{{asset($d->bukti_trf)}}">
+                                                    <img src="{{asset($d->bukti_trf)}}" id="preview" class="img-thumbnail" width="150" height="200" alt="belum ditransfer admin">
+                                                </a>
+                                            @elseif($d->status_wd==3)
+                                                Permintaan Withdraw Ditolak
+                                            @endif
+                                           
                                         </td>
+                                       
                                         <td>
                                             {{$d->keterangan}}
                                         </td>

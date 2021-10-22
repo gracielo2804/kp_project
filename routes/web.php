@@ -60,8 +60,12 @@ Route::middleware("authCustomer")->group(function(){
     //Deposit
     Route::get('/deposit','customerController@depositPage')->name('deposit');
     Route::post('/deposit','customerController@deposit');
+    Route::get('/withdraw','customerController@withdrawPage')->name('withdraw');
+    Route::post('/withdraw','customerController@withdraw');
     //HistoryDeposit
     Route::get('/hisDeposit','customerController@hisDepositPage')->name('hisDeposit');
+
+    Route::get('/hisWithdraw','customerController@hisWithdrawPage')->name('hisWithdraw');
     Route::get('/editProfile','customerController@editProfilePage')->name('editProfile');
     Route::post('/editProfile','customerController@editProfile');
 });

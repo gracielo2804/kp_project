@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\listBank;
 use App\Models\historyDeposit;
+use App\Models\historyWithdrawal;
 use App\Models\ListEditProfile;
 use App\Models\paketInvestassi;
+use App\Http\Controllers\customerController\refreshSession;
 
 class customerController extends Controller
 {
@@ -28,6 +30,62 @@ class customerController extends Controller
     public function depositPage(){
         $listbank= listBank::where('status',1)->get();        
         return view('deposit')->with(['listBank'=>$listbank]);
+    }
+
+    public function withdrawPage(){
+        $customer = Session::get('custLog');
+        return view('withdraw',['customer'=>$customer]);
+    }
+    public function withdraw(Request $request){
+
+        $jumlahData=DB::select("SELECT count(id_wd) as jumlah from history_withdrawal WHERE Date(`tanggal_wd`)=CURDATE();");
+        $ctr=$jumlahData[0]->jumlah+1;
+        $ctrString="";
+        if($ctr<10){
+            $ctrString="0000".$ctr;
+        }
+        else if($ctr>=10 && $ctr<100){
+            $ctrString="000".$ctr;
+        }
+        else if($ctr>=100 && $ctr<1000){
+            $ctrString="00".$ctr;
+        }
+        else if($ctr>=1000 && $ctr<10000){
+            $ctrString="0".$ctr;
+        }
+        else if($ctr>=10000 && $ctr<100000){
+            $ctrString="".$ctr;
+        }
+        $date=date("dmy");
+        $id="WD".$date.$ctrString;                    
+        // $file=$request->file('img');
+        // if($file==null){
+        //     return redirect()->back()->with(['error','Wajib Upload Bukti Transfer !']);
+        // }
+        // $tujuanfile='buktiTransfer';
+        // $fileExtensions=$file->getClientOriginalExtension();
+        // $fileName=$id;        
+        $dataCustomer = Session::get('custLog');
+        // $file->move($tujuanfile,$fileName.".".$fileExtensions);
+        historyWithdrawal::insert([
+            "id_wd"=> $id,
+            "username_cust"=>$dataCustomer['username_customer'],
+            "jumlah_wd"=>$request->jumlahwithdraw,
+            "bank_tujuan"=>$request->nama_bank,
+            "norek_tujuan"=>$request->norek,
+            "an_norek_tujuan"=>$request->an,
+            "status_wd"=>1
+        ]);
+        Customer::where("username_customer",$dataCustomer['username_customer'])->update(['saldo'=>(int)$dataCustomer['saldo']-(int)$request->jumlahwithdraw]);
+        $this->refreshSession($dataCustomer['username_customer']);
+        return redirect()->back()->with(['success'=>'Berhasil Request Withdraw, Silahkan cek status pada halaman history withdraw']);
+        
+    }
+
+    public function hisWithdrawPage(){ 
+        // dd(Session::get('custLog'));
+        $data=historyWithdrawal::where('username_cust',Session::get('custLog')['username_customer'])->get();
+        return view('historyWithdraw',["data"=>$data]);
     }
 
     public function deposit(Request $request){

@@ -93,6 +93,18 @@
                         <span>History Deposit</span>
                         </a>
                     </li>
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/withdraw")) ? 'active' : '' }}" href="/withdraw">
+                        <i class="fa fa-tasks"></i>
+                        <span>Withdrawal</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/hisWithdraw")) ? 'active' : '' }}" href="/hisWithdraw">
+                        <i class="fa fa-hospital-o"></i>
+                        <span>History Withdrawal</span>
+                        </a>
+                    </li>
                     {{-- <li class="sub-menu">
                         <a class="{{ (url()->current() == url("/admin/listPesawat")) ? 'active' : '' }}" href="/admin/listPesawat">
                         <i class=" fa fa-plane"></i>
@@ -142,6 +154,9 @@
     </section>
     <script src="{{ asset('asset_sementara/admin/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>
+    <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
     @stack('js')
 
     {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
