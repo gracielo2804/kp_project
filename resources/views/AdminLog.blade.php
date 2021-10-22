@@ -57,22 +57,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel">Image preview</h4>
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            </div>
-                            <div class="modal-body">
-                                <center><img src="" id="imagepreview" style="width: 500px; height: 364px; object-fit:contain" ></center>
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             </div>
             </div>
@@ -95,16 +79,8 @@
                 ordering: true,
                 bJQueryUI: true,
                 bStateSave: true,
-                iDisplayLength: 50,
-                aaSorting: [[4, "desc"], [5, "asc"]],
-                aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                sPaginationType: "full_numbers",
             });
             $('#tbPegawai').wrap("<div class='scrolledTable'></div>");
-         $(".pop").on("click", function() {
-             $('#imagepreview').attr('src', $(this).attr('src')); // here asign the image to the modal when the user click the enlarge link
-             $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-         });
      });
 </script>
 @endpush
