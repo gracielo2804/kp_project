@@ -56,11 +56,8 @@
                                 @foreach($data as $d)
                                     <tr>
                                         <td>{{ $d->id_paket}}</td>
-<<<<<<< HEAD
                                         <td><center><a href="#" id="pop" ><img width="250px" height="200px" src="/{{ $d->gambar_paket}}" id="preview" class="img-thumbnail"></a></center></td>
-=======
-                                        <td><center><a href="#" id="pop" ><img width="250px" height="200px" src="/{{ $d->gambar_paket}}" id="preview" class="img-thumbnail hover-shadow cursor" onclick="openModal();currentSlide({{ $loop->iteration}})"></a></center></td>
->>>>>>> 53edefbfc72ce0329d32e390df14eb8d7877cbb7
+
                                         <!-- The Modal -->
                                         <div id="myModal" class="modal">
 
