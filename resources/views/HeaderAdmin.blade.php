@@ -8,23 +8,101 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <title>Dashboard Admin</title>
+    <style>
+        .fa-bars {
+            color : white;
+        }
+        /* Style the Image Used to Trigger the Modal */
+        #preview {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        }
 
+        #preview:hover {opacity: 0.7;}
+
+        /* The Modal (background) */
+        .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        /* Modal Content (Image) */
+        .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        }
+
+        /* Caption of Modal Image (Image Text) - Same Width as the Image */
+        #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+        }
+
+        /* Add Animation - Zoom in the Modal */
+        .modal-content, #caption {
+        animation-name: zoom;
+        animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+        from {transform:scale(0)}
+        to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+        .modal-content {
+            width: 100%;
+        }
+}
+    </style>
     <!-- Favicons -->
     <link href="{{asset('asset_sementara/admin/img/favicon.png')}}" rel="icon">
     <link href="{{asset('asset_sementara/admin/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
-
-    <!-- Bootstrap core CSS -->
-    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> --}}
     <link href="{{ asset('asset_sementara/admin/lib/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
-    <!--external css-->
     <link href="{{ asset('asset_sementara/admin/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('asset_sementara/admin/lib/bootstrap-fileupload/bootstrap-fileupload.css') }}" />
-    <!-- Custom styles for this template -->
+    <link href="{{ asset('asset_sementara/css/lightbox.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset_sementara/css/lightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('asset_sementara/admin/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset_sementara/admin/css/style-responsive.css') }}" rel="stylesheet">
     @stack('css')
 </head>
-
 <body>
     <section id="container">
         <!-- **********************************************************************************************************************************************************
@@ -33,7 +111,7 @@
         <!--header start-->
         <header class="header black-bg">
                 <div class="sidebar-toggle-box">
-                    <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+                    <div color="white" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
                 </div>
         <!--logo start-->
             <a href="/homecust" class="logo"><b>Admin Dashboard</span></b></a>
@@ -133,28 +211,32 @@
     <script src="{{ asset('asset_sementara/admin/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>
     @stack('js')
-
-    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script class="include" type="text/javascript" src="{{ asset('asset_sementara/admin/lib/jquery.dcjqaccordion.2.7.js') }}"></script>
-    <script src="{{ asset('asset_sementara/admin/lib/jquery.scrollTo.min.js') }}"></script>
-    <script src="{{ asset('asset_sementara/admin/lib/jquery.nicescroll.js') }}" type="text/javascript"></script>
-    <!--common script for all pages-->
-    <script src="{{ asset('asset_sementara/admin/lib/common-scripts.js') }}"></script>
-    <!--script for this page-->
-    <script src="{{ asset('asset_sementara/admin/lib/jquery-ui-1.9.2.custom.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('asset_sementara/admin/lib/bootstrap-fileupload/bootstrap-fileupload.js') }}"></script>
-    <script src="{{ asset('asset_sementara/admin/lib/advanced-form-components.js') }}"></script>
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
       <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
       <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+      <script src="{{ asset('asset_sementara/js/lightbox.js') }}"></script>
+      <script>
+          var modal = document.getElementById("myModal");
 
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById("preview");
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+            img.onclick = function(){
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+            }
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+            modal.style.display = "none";
+            }
+      </script>
     @stack('js')
 </body>
 

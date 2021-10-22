@@ -26,7 +26,6 @@
                 </button>
             </div>
             @endif
-            <!-- BASIC FORM ELELEMNTS -->
             <span id="errorMsg"></span>
             <div class="row mt">
             <div class="col-lg-12">
@@ -90,6 +89,19 @@
                     <div class="form-group">
                     <div class="col-sm-4">
                         <a href="#" id="pop"><img src="" id="preview" class="img-thumbnail"></a>
+
+                        <!-- The Modal -->
+                        <div id="myModal" class="modal">
+
+                            <!-- The Close Button -->
+                            <span class="close">&times;</span>
+
+                            <!-- Modal Content (The Image) -->
+                            <img class="modal-content" id="img01">
+
+                            <!-- Modal Caption (Image Text) -->
+                            <div id="caption"></div>
+                        </div>
                     </div></div>
                     <button class="btn btn-success ml-3" type="submit" id="btnSubmit">Submit</button><br>
                 </form>
@@ -207,7 +219,11 @@
             };
             // read the image file as a data URL.
             reader.readAsDataURL(this.files[0]);
-         });
+          });
+        //  $("#pop").on("click", function() {
+        //      $('#imagepreview').attr('src', $('#preview').attr('src'));
+        //      $('#imagemodal').modal('show');
+        //  });
          $('#btnSubmit').on('click',function(){
              if($('#file').val()==""){
                 $('#errorMsg').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -218,10 +234,6 @@
                 </div>`)
              }
 
-         });
-         $("#pop").on("click", function() {
-             $('#imagepreview').attr('src', $('#preview').attr('src')); // here asign the image to the modal when the user click the enlarge link
-             $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
          });
      });
 
