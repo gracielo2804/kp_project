@@ -5,8 +5,8 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>Explore<br></strong>Holyland with Us</h1>
-            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Bible study tour in footsteps of Jesus an the Prophets that will deepen your historical & geographical understanding of the Scripture</p>
+            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>Invest<br></strong>with Us</h1>
+            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Invest for your future with us</p>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-like"></span></div></div>
               <div class="media-body p-2 mt-2">
-                <h3 class="heading mb-3">Travellers Love Us</h3>
+                <h3 class="heading mb-3">Many Investor Love Us</h3>
               </div>
             </div>
           </div>
@@ -34,14 +34,14 @@
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-detective"></span></div></div>
               <div class="media-body p-2 mt-2">
-                <h3 class="heading mb-3">Best Travel Agent</h3>
+                <h3 class="heading mb-3">Best Investment Company</h3>
               </div>
             </div>
           </div>
         </div>
       </div>
 	</section>
-    <section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(images/bg_1.jpg);">
+    {{-- <section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(images/bg_1.jpg);">
     	<div class="container">
     		<div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
@@ -159,9 +159,9 @@
 			</div>
 		  </div>
 		</div>
-	  </section>
+	  </section> --}}
 
-    <section class="ftco-section testimony-section bg-light">
+    {{-- <section class="ftco-section testimony-section bg-light">
       <div class="container">
         <div class="row justify-content-start">
           <div class="col-md-5 heading-section ftco-animate">
@@ -226,12 +226,30 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> --}}
 	<section class="ftco-section-parallax">
       <div class="parallax-img d-flex align-items-center">
         <div class="container">
           <div class="row d-flex justify-content-center">
-            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+			<div class="col-12 text-center heading-section heading-section-white ftco-animate">
+				<h2>Our Invest Package</h2>
+			</div>
+			@foreach ($dataPaket as $item )
+				<div class="card m-3" style="width: 18rem;">
+					<img src={{asset($item->gambar_paket)}} class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">{{$item->nama_paket}} </h5>
+						<p class="card-text">Minimum Invest : Rp. {{number_format($item->minimal_investasi)}}<br>
+							Return : {{$item->presentase_profit}}% <br>
+							Duration : {{$item->durasi_kontrak}} Months
+						</p>
+
+						<a href="#" class="btn btn-primary">Invest</a>
+					</div>
+				</div>
+			@endforeach
+			
+            {{-- <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
               <h2>The Best Holyland Tour with the Specialist</h2>
               <p>Subscribe to our mailing list to receive updates</p>
               <div class="row d-flex justify-content-center mt-5">
@@ -244,7 +262,7 @@
                   </form>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>

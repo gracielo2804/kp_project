@@ -100,7 +100,7 @@
                         <span>Laporan Depo & WD</span>
                         </a>
                     </li>
-                    @if (Session::get('adminLog') != "owner")
+                    @if (Session::get('adminLog') == "owner")
                         <li class="sub-menu">
                             <a class="{{ (url()->current() == url("/admin/logadmin")) ? 'active' : '' }}" href="/admin/logadmin">
                             <i class=" fa fa-sticky-note-o "></i>

@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\listBank;
 use App\Models\historyDeposit;
 use App\Models\ListEditProfile;
+use App\Models\paketInvestassi;
 
 class customerController extends Controller
 {
@@ -17,6 +18,12 @@ class customerController extends Controller
     public function refreshSession($username){
         $customer = Customer::where('username_customer',$username)->first();
         Session::put('custLog',$customer);
+    }
+
+    public function homePage(){ 
+        // dd(Session::get('custLog'));
+        $dataPaket=paketInvestassi::where('status',1)->get();
+        return view('index',["dataPaket"=>$dataPaket]);
     }
     public function depositPage(){
         $listbank= listBank::where('status',1)->get();        

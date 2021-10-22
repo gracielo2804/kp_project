@@ -47,7 +47,7 @@
                     <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
                 </div>
         <!--logo start-->
-            <a href="/homecust" class="logo"><b>Pray &<span>Go</span></b></a>
+            <a href="/homecust" class="logo"><b>Exim Traders</span></b></a>
             <!--logo end-->
             <ul class="nav pull-right top-menu">
                 <a class="btn btn-danger btn-sm mt-3" href="/logout">Logout</a>
@@ -62,7 +62,7 @@
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
-                    <h5 class="centered">Welcome,Admin</h5>
+                    <h5 class="centered">Welcome,User</h5>
                     {{-- <li class="mt">
                         <a class="{{ (url()->current() == url("/admin/index")) ? 'active' : '' }}" href="index">
                         <i class="fa fa-dashboard"></i>
@@ -70,8 +70,14 @@
                         </a>
                     </li> --}}
                     <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/invest")) ? 'active' : '' }}" href="/invest">
+                        <i class="fa fa-usd"></i>
+                        <span>Invest</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
                         <a class="{{ (url()->current() == url("/editProfile")) ? 'active' : '' }}" href="/editProfile">
-                        <i class="far fa-id-card"></i>
+                        <i class="fa fa-user-o"></i>
                         <span>Edit Profile</span>
                         </a>
                     </li>
@@ -87,7 +93,7 @@
                         <span>History Deposit</span>
                         </a>
                     </li>
-                    <li class="sub-menu">
+                    {{-- <li class="sub-menu">
                         <a class="{{ (url()->current() == url("/admin/listPesawat")) ? 'active' : '' }}" href="/admin/listPesawat">
                         <i class=" fa fa-plane"></i>
                         <span>Pesawat</span>
@@ -115,7 +121,7 @@
                         <i class="fa fa-comments-o"></i>
                             <span>Chat Room</span>
                         </a>
-                    </li>
+                    </li> --}}
                 <!-- sidebar menu end-->
             </div>
         </aside>
