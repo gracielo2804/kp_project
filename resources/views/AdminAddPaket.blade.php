@@ -103,7 +103,7 @@
                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             </div>
                             <div class="modal-body">
-                                <center><img src="" id="imagepreview" style="width: 500px; height: 364px; object-fit:contain" ></center><br><br>
+                                <center><img src="" id="imagepreview" style="width: 500px; height: 364px; object-fit:contain" ></center>
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -136,51 +136,52 @@
   @push('js')
   <script>
     $(document).ready(function(){
-         $('#btnSubmit').on('click',function(){
+        $('#btnSubmit').on('click',function(){
             if($('#btnSubmit').attr('type')=="button"){
+
             }
-         });
-         $('#gambar').on('change',function(event){
-             var file = event.target.files[0];
-             if (file.type.match('image')) {
-                 var fileReader = new FileReader();
-                 fileReader.readAsDataURL(file);
-                 fileReader.onload = readSucess;
-                 function readSucess(){
-                     if($('#image-preview').length){
-                         var img = document.createElement('img');
-                         img.src=fileReader.result;
-                         console.log(img.height);
-                         if(img.width>img.height){
-                            $('#image-preview').width(200).height(150);
-                         }
-                         else{
-                            $('#image-preview').width(150).height(200);
-                         }
-                         $('#image-preview').attr('src',fileReader.result);
-                     }
-                     else{
-                         $('#btn-pick').html(`<i class="fa fa-paperclip"></i> Change`);
-                         var img = document.createElement('img');
-                         img.setAttribute('id',"image-preview");
-                         img.src = fileReader.result;
-                         if(img.width>img.height){
-                            img.width=200
-                            img.height=150
-                         }
-                         else{
-                            img.height=200
-                            img.width=150
-                         }
-                         img.setAttribute('style','object-fit:cover');
-                         $('#pop').append(img);
-                     }
-                     // document.getElementsByTagName('div')[0].appendChild(img);
-                     // };
-                     // $('#image-preview').src=fileReader.result;
-                     // $('#image-preview').attr('style',"object-fill:contain;");
-                 }
-             }
+        });
+        $('#gambar').on('change',function(event){
+            var file = event.target.files[0];
+            if (file.type.match('image')) {
+                var fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload = readSucess;
+                function readSucess(){
+                    if($('#image-preview').length){
+                        var img = document.createElement('img');
+                        img.src=fileReader.result;
+                        console.log(img.height);
+                        if(img.width>img.height){
+                        $('#image-preview').width(200).height(150);
+                        }
+                        else{
+                        $('#image-preview').width(150).height(200);
+                        }
+                        $('#image-preview').attr('src',fileReader.result);
+                    }
+                    else{
+                        $('#btn-pick').html(`<i class="fa fa-paperclip"></i> Change`);
+                        var img = document.createElement('img');
+                        img.setAttribute('id',"image-preview");
+                        img.src = fileReader.result;
+                        if(img.width>img.height){
+                        img.width=200
+                        img.height=150
+                        }
+                        else{
+                        img.height=200
+                        img.width=150
+                        }
+                        img.setAttribute('style','object-fit:cover');
+                        $('#pop').append(img);
+                    }
+                    // document.getElementsByTagName('div')[0].appendChild(img);
+                    // };
+                    // $('#image-preview').src=fileReader.result;
+                    // $('#image-preview').attr('style',"object-fill:contain;");
+                }
+            }
          });
          $('.browse').on('click',function() {
             var file = $(this).parents().find(".file");
@@ -218,31 +219,12 @@
              }
 
          });
+         $("#pop").on("click", function() {
+             $('#imagepreview').attr('src', $('#preview').attr('src')); // here asign the image to the modal when the user click the enlarge link
+             $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+         });
      });
 
-     jQuery.fn.ForceNumericOnly =
-         function()
-         {
-             return this.each(function()
-             {
-                 $(this).keydown(function(e)
-                 {
-                     var key = e.charCode || e.keyCode || 0;
-                     // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers ONLY
-                     // home, end, period, and numpad decimal
-                     return (
-                         key == 8 ||
-                         key == 9 ||
-                         key == 13 ||
-                         key == 46 ||
-                         // key == 110 ||
-                         // key == 190 ||
-                         (key >= 35 && key <= 40) ||
-                         (key >= 48 && key <= 57) ||
-                         (key >= 96 && key <= 105));
-                 });
-             });
-         };
 </script>
 @endpush
 @endsection

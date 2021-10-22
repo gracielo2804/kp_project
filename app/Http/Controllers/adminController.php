@@ -106,7 +106,7 @@ class adminController extends Controller
             "username_admin"=> session()->get('adminLog'),
             "keterangan" => "Menonaktifkan Admin dengan username = ". $username
         ]);
-        return back()->with(['error'=>'Berhasil menonaktifkan paket investasi']);
+        return back()->with(['error'=>'Berhasil menon-aktifkan status akun admin dengan username'.$username]);
     }
 
     public function aktif_admin($username){
@@ -115,7 +115,7 @@ class adminController extends Controller
             "username_admin"=> session()->get('adminLog'),
             "keterangan" => "Berhasil mengaktifkan Admin dengan username = ". $username
         ]);
-        return back()->with(['success'=>'Berhasil mengaktifkan paket investasi']);
+        return back()->with(['success'=>'Berhasil mengaktifkan status akun admin dengan username'.$username]);
     }
 
     public function pageAddAdmin(){

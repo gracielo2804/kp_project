@@ -59,16 +59,20 @@ class loginController extends Controller
         $username=$request['username'];
         $pass=$request['pass'];
         if($username=="owner_exim"&& $pass=="exim123"){
+            $request->session()->put('adminLog',"owner");
             return redirect()->route('homeadmin');
         }
         else{
             $admin = Admin::where('username_admin',$username)->where('status',2)->first();
             if($admin==null){
-                return redirect()->back()->with(['error'=>'Incorrect Username or Password ']);
+                return redirect()->back()->with(['error'=>'Status akun sedang di non-aktifkan, silahkan hubungi owner!']);
             }
             else{
                 if(!password_verify($pass,$admin['password_admin'])){
                     return redirect()->back()->with(['error'=>'Incorrect Username or Password ']);
+                }
+                if($admin['status'] == 2){
+                    return redirect()->back()->with(['error'=>'Status akun sedang di non-aktifkan, silahkan hubungi owner!']);
                 }
                 $request->session()->put('adminLog',$username);
                 return redirect()->route('homeadmin');
@@ -77,6 +81,7 @@ class loginController extends Controller
     }
     function logout(){
         Session::remove('custLog');
+        Session::remove('adminLog');
         return redirect()->route('loginCustomer');
     }
 }
