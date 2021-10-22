@@ -7,6 +7,7 @@
         }th, td {
     white-space: nowrap;
 }
+.scrolledTable{ overflow-y: auto; clear:both; }
     </style>
 @endpush
 @section('body')
@@ -87,14 +88,19 @@
   <script type="text/javascript">
     $(document).ready(function(){
         $("#tbPegawai").DataTable({
-            retrieve: true,
-            paging: true,
-            scrollX: true,
-            lengthChange : true,
-            scrollCollapse: true,
-            searching: true,
-            ordering: true
+                retrieve: true,
+                paging: true,
+                lengthChange : true,
+                searching: true,
+                ordering: true,
+                bJQueryUI: true,
+                bStateSave: true,
+                iDisplayLength: 50,
+                aaSorting: [[4, "desc"], [5, "asc"]],
+                aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                sPaginationType: "full_numbers",
             });
+            $('#tbPegawai').wrap("<div class='scrolledTable'></div>");
          $(".pop").on("click", function() {
              $('#imagepreview').attr('src', $(this).attr('src')); // here asign the image to the modal when the user click the enlarge link
              $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function

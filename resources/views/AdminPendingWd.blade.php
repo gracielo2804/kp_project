@@ -5,6 +5,10 @@
             visibility: hidden;
             position: absolute;
         }
+        .scrolledTable{ overflow-y: auto; clear:both; }
+        .fa-cog {
+            color: white;
+        }
     </style>
 @endpush
 @section('body')
@@ -77,6 +81,19 @@
                                                         <input type="text" class="form-control" disabled placeholder="Upload File" id="file" required>
                                                         <div class="input-group-append">
                                                             <button type="button" class="browse btn btn-primary">Browse...</button>
+                                                        </div><br>
+                                                        <a href="#" id="pop"><img src="" id="preview" class="img-thumbnail" data-lightbox="roadtrip"></a>
+                                                        <!-- The Modal -->
+                                                        <div id="myModal" class="modal">
+
+                                                            <!-- The Close Button -->
+                                                            <span class="close">&times;</span>
+
+                                                            <!-- Modal Content (The Image) -->
+                                                            <img class="modal-content" id="img01">
+
+                                                            <!-- Modal Caption (Image Text) -->
+                                                            <div id="caption"></div>
                                                         </div>
                                                     </div>
                                                     </div>
@@ -206,15 +223,21 @@
             // read the image file as a data URL.
             reader.readAsDataURL(this.files[0]);
          });
-        $("#tbPegawai").DataTable({
-            retrieve: true,
-            paging: true,
-            scrollX: true,
-            lengthChange : true,
-            scrollCollapse: true,
-            searching: true,
-            ordering: true
+
+         $("#tbPegawai").DataTable({
+                retrieve: true,
+                paging: true,
+                lengthChange : true,
+                searching: true,
+                ordering: true,
+                bJQueryUI: true,
+                bStateSave: true,
+                iDisplayLength: 50,
+                aaSorting: [[4, "desc"], [5, "asc"]],
+                aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                sPaginationType: "full_numbers",
             });
+            $('#tbPegawai').wrap("<div class='scrolledTable'></div>");
          $(".pop").on("click", function() {
              $('#imagepreview').attr('src', $(this).attr('src')); // here asign the image to the modal when the user click the enlarge link
              $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function

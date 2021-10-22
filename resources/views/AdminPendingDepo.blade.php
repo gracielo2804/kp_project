@@ -5,6 +5,7 @@
             visibility: hidden;
             position: absolute;
         }
+        .scrolledTable{ overflow-y: auto; clear:both; }
     </style>
 @endpush
 @section('body')
@@ -71,6 +72,18 @@
                                                 @endif
                                             @endforeach
                                             <td><center><a href="#" id="pop"><img width="250px" height="200px" src="/{{ $d->bukti_trf}}" id="preview" class="img-thumbnail"></a></center></td>
+                                            <!-- The Modal -->
+                                            <div id="myModal" class="modal">
+
+                                                <!-- The Close Button -->
+                                                <span class="close">&times;</span>
+
+                                                <!-- Modal Content (The Image) -->
+                                                <img class="modal-content" id="img01">
+
+                                                <!-- Modal Caption (Image Text) -->
+                                                <div id="caption"></div>
+                                            </div>
                                             <td>Pending</td>
                                             <form class="form-horizontal style-form" method="POST" action="/admin/pending/deposit/decline" enctype="multipart/form-data">
                                             @csrf
@@ -124,15 +137,21 @@
   @push('js')
   <script type="text/javascript">
     $(document).ready(function(){
+
         $("#tbPegawai").DataTable({
-            retrieve: true,
-            paging: true,
-            scrollX: true,
-            lengthChange : true,
-            scrollCollapse: true,
-            searching: true,
-            ordering: true
+                retrieve: true,
+                paging: true,
+                lengthChange : true,
+                searching: true,
+                ordering: true,
+                bJQueryUI: true,
+                bStateSave: true,
+                iDisplayLength: 50,
+                aaSorting: [[4, "desc"], [5, "asc"]],
+                aLengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                sPaginationType: "full_numbers",
             });
+            $('#tbPegawai').wrap("<div class='scrolledTable'></div>");
          $(".pop").on("click", function() {
              $('#imagepreview').attr('src', $(this).attr('src')); // here asign the image to the modal when the user click the enlarge link
              $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
