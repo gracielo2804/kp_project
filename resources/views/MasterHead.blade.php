@@ -39,6 +39,7 @@
             <ul class="navbar-nav ml-auto">
               <li class="nav-item"><a href="/homecust" class="nav-link">Home</a></li>
               <li class="nav-item"><a href="/deposit" class="nav-link">Deposit</a></li>
+              <li class="nav-item"><a href="/withdraw" class="nav-link">Withdraw</a></li>
               
               {{-- <li class="nav-item"><a href="blog" class="nav-link">Artikel Ziarah</a></li>
               <li class="nav-item">

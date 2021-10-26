@@ -279,6 +279,18 @@
              }
              
          });
+         const autoNumericOptionsEuro = {
+            digitGroupSeparator        : '.',
+            decimalCharacter           : ',',
+            decimalCharacterAlternative: '.',
+            currencySymbolPlacement    : AutoNumeric.options.currencySymbolPlacement.prefix,
+            roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
+            minimumValue               : 0,
+            wheelStep                  : 1000,
+            decimalPlaces              : 0
+        };
+        new AutoNumeric(document.getElementById('jumlahDeposit'), autoNumericOptionsEuro);
+         $('#jumlahDeposit').ForceNumericOnly();  
          $('#jumlahDeposit').ForceNumericOnly();  
          $("#pop").on("click", function() {
              $('#imagepreview').attr('src', $('#preview').attr('src')); // here asign the image to the modal when the user click the enlarge link

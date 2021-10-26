@@ -23,16 +23,22 @@ class customerController extends Controller
     }
 
     public function homePage(){ 
+        $dataCustomer = Session::get('custLog');
+        $this->refreshSession($dataCustomer['username_customer']);        
         // dd(Session::get('custLog'));
         $dataPaket=paketInvestassi::where('status',1)->get();
         return view('index',["dataPaket"=>$dataPaket]);
     }
     public function depositPage(){
+        $dataCustomer = Session::get('custLog');
+        $this->refreshSession($dataCustomer['username_customer']);
         $listbank= listBank::where('status',1)->get();        
         return view('deposit')->with(['listBank'=>$listbank]);
     }
 
     public function withdrawPage(){
+        $dataCustomer = Session::get('custLog');
+        $this->refreshSession($dataCustomer['username_customer']);
         $customer = Session::get('custLog');
         return view('withdraw',['customer'=>$customer]);
     }
@@ -57,20 +63,28 @@ class customerController extends Controller
             $ctrString="".$ctr;
         }
         $date=date("dmy");
-        $id="WD".$date.$ctrString;                    
-        // $file=$request->file('img');
-        // if($file==null){
-        //     return redirect()->back()->with(['error','Wajib Upload Bukti Transfer !']);
-        // }
-        // $tujuanfile='buktiTransfer';
-        // $fileExtensions=$file->getClientOriginalExtension();
-        // $fileName=$id;        
+        $id="WD".$date.$ctrString;                      
+        $withdraw = $request->jumlahwithdraw;
+        $withdraw_separate = explode(".", $withdraw);
+        $withdraw_ammount=0;
+        $ctr_pangkat=0;
+        if(count($withdraw_separate)>1){     
+            for ($x = count($withdraw_separate)-1; $x >= 0; $x--) {
+                $temp=$withdraw_separate[$x]*(pow(10,$ctr_pangkat*3));
+                $ctr_pangkat++;
+                $withdraw_ammount+=$temp;
+            }
+        }
+        else {
+            $withdraw_ammount=(int)$withdraw_separate[0];            
+        }
         $dataCustomer = Session::get('custLog');
+        
         // $file->move($tujuanfile,$fileName.".".$fileExtensions);
         historyWithdrawal::insert([
             "id_wd"=> $id,
             "username_cust"=>$dataCustomer['username_customer'],
-            "jumlah_wd"=>$request->jumlahwithdraw,
+            "jumlah_wd"=>$withdraw_ammount,
             "bank_tujuan"=>$request->nama_bank,
             "norek_tujuan"=>$request->norek,
             "an_norek_tujuan"=>$request->an,
@@ -108,6 +122,26 @@ class customerController extends Controller
         else if($ctr>=10000 && $ctr<100000){
             $ctrString="".$ctr;
         }
+
+        $deposit = $request->jumlahDeposit;
+        $deposit_separate = explode(".", $deposit);
+        $deposit_ammount=0;
+        $ctr_pangkat=0;
+        if(count($deposit_separate)>1){     
+            for ($x = count($deposit_separate)-1; $x >= 0; $x--) {
+                $temp=$deposit_separate[$x]*(pow(10,$ctr_pangkat*3));
+                $ctr_pangkat++;
+                $deposit_ammount+=$temp;
+            }
+        }
+        else {
+            $deposit_ammount=(int)$deposit_separate[0];            
+        }
+
+        
+        dd(number_format($deposit_ammount));
+
+
         $date=date("dmy");
         $id="DP".$date.$ctrString;                    
         $file=$request->file('img');
@@ -118,7 +152,7 @@ class customerController extends Controller
         $fileExtensions=$file->getClientOriginalExtension();
         $fileName=$id;        
         $dataCustomer = Session::get('custLog');
-        $file->move($tujuanfile,$fileName.".".$fileExtensions);
+        $file->move($tujuanfile,$fileName.".".$fileExtensions);       
         historyDeposit::insert([
             "id_depo"=> $id,
             "username_cust"=>$dataCustomer['username_customer'],

@@ -34,10 +34,11 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Rp</div>
                                 </div>
-                                <input type="number" step="1000" class="form-control" name="jumlahwithdraw" id="jumlahwithdraw"  value='{{old('jumlahwithdraw')}}' max={{$customer['saldo']}} required>                                
+                                <input type="text" autocomplete="off" class="form-control" name="jumlahwithdraw" id="jumlahwithdraw"  value='{{old('jumlahwithdraw')}}' max={{$customer['saldo']}} required>                                
                             </div>
                         </div>
                         <small id="emailHelp" class="form-text text-muted ml-3">Maximum Withdraw Ammount is Rp. {{number_format($customer['saldo'])}}</small>
+                        <input type="hidden" id="maximum-value" value="{{$customer['saldo']}}">
                     </div>
                     <div class="form-group ml-3">
                         Nama Bank : 
@@ -100,6 +101,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- col-lg-12-->
             </div>
             {{-- <div class="row mt">
@@ -216,12 +218,25 @@
   @push('js')
   <script>
     $(document).ready(function(){    
-         $('#jumlahwithdraw').ForceNumericOnly();  
-         $('#norek').ForceNumericOnly();  
-         $("#pop").on("click", function() {
-             $('#imagepreview').attr('src', $('#preview').attr('src')); // here asign the image to the modal when the user click the enlarge link
-             $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-         });         
+        const maximumValueWithdrawal = $('#maximum-value').val();
+        const autoNumericOptionsEuro = {
+            digitGroupSeparator        : '.',
+            decimalCharacter           : ',',
+            decimalCharacterAlternative: '.',
+            currencySymbolPlacement    : AutoNumeric.options.currencySymbolPlacement.prefix,
+            roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
+            maximumValue               : maximumValueWithdrawal,
+            minimumValue               : 0,
+            wheelStep                  : 1000,
+            decimalPlaces              : 0
+        };
+        new AutoNumeric(document.getElementById('jumlahwithdraw'), autoNumericOptionsEuro);
+        $('#jumlahwithdraw').ForceNumericOnly();  
+        $('#norek').ForceNumericOnly();  
+        $("#pop").on("click", function() {
+            $('#imagepreview').attr('src', $('#preview').attr('src')); // here asign the image to the modal when the user click the enlarge link
+            $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+        });         
      }); 
 
      jQuery.fn.ForceNumericOnly =

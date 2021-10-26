@@ -154,6 +154,7 @@
     </section>
     <script src="{{ asset('asset_sementara/admin/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
     <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
