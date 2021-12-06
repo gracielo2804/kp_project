@@ -25,6 +25,8 @@
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('asset_sementara/admin/lib/bootstrap-datetimepicker/css/datetimepicker.css') }}" /> --}}
     <!-- Custom styles for this template -->
     <link href="{{ asset('asset_sementara/admin/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset_sementara/css/bootstrap-pincode-input.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('asset_sementara/css/sweetalert2.min.css')}}">
     {{-- <link href="{{ asset('asset_sementara/admin/css/style-responsive.css') }}" rel="stylesheet"> --}}
 
     <!-- =======================================================
@@ -73,6 +75,12 @@
                         <a class="{{ (url()->current() == url("/invest")) ? 'active' : '' }}" href="/invest">
                         <i class="fa fa-usd"></i>
                         <span>Invest</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="{{ (url()->current() == url("/hisInvest")) ? 'active' : '' }}" href="/hisInvest">
+                        <i class="fa fa-hospital-o"></i>
+                        <span>History Invest</span>
                         </a>
                     </li>
                     <li class="sub-menu">
@@ -154,10 +162,13 @@
     </section>
     <script src="{{ asset('asset_sementara/admin/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('asset_sementara/js/bootstrap-pincode-input.js') }}"></script>
+    <script src="{{ asset('asset_sementara/js/jquery.validate.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
     <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('asset_sementara/js/sweetalert2.min.js')}}"></script>
     @stack('js')
 
     {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

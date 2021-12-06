@@ -26,6 +26,12 @@
     <link rel="stylesheet" href="{{ asset('asset_sementara/css/flaticon.css')}}">
     <link rel="stylesheet" href="{{ asset('asset_sementara/css/icomoon.css')}}">
     <link rel="stylesheet" href="{{ asset('asset_sementara/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('asset_sementara/css/sweetalert2.min.css')}}">
+    {{-- <style>
+      .input-invest{
+        display: none;
+      }
+    </style> --}}
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -34,7 +40,6 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
           </button>
-
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item"><a href="/homecust" class="nav-link">Home</a></li>
@@ -130,7 +135,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{{ asset('asset_sementara/js/jquery-migrate-3.0.1.min.js')}}"></script>
 <script src="{{ asset('asset_sementara/js/popper.min.js')}}"></script>
 <script src="{{ asset('asset_sementara/js/bootstrap.min.js')}}"></script>
-<script src="{{ asset('asset_sementara/js/jquery.easing.1.3.js')}}"></script>
+{{-- <script src="{{ asset('asset_sementara/js/jquery.easing.1.3.js')}}"></script> --}}
 <script src="{{ asset('asset_sementara/js/jquery.waypoints.min.js')}}"></script>
 <script src="{{ asset('asset_sementara/js/jquery.stellar.min.js')}}"></script>
 <script src="{{ asset('asset_sementara/js/owl.carousel.min.js')}}"></script>
@@ -140,9 +145,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{{ asset('asset_sementara/js/bootstrap-datepicker.js')}}"></script>
 {{-- <script src="{{ asset('asset_sementara/js/jquery.timepicker.min.js')}}"></script> --}}
 <script src="{{ asset('asset_sementara/js/scrollax.min.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-<script src="{{ asset('asset_sementara/js/google-map.js')}}"></script>
+{{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> --}}
+{{-- <script src="{{ asset('asset_sementara/js/google-map.js')}}"></script> --}}
 <script src="{{ asset('asset_sementara/js/main.js')}}"></script>
+<script src="{{ asset('asset_sementara/js/sweetalert2.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
 <script>
   $(document).ready(function(){
     console.log($('#username').val())
@@ -165,5 +172,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     //  })
   });
 </script>
+@stack('js')
 </body>
 </html>

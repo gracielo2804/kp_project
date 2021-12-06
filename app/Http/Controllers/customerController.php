@@ -13,6 +13,7 @@ use App\Models\historyWithdrawal;
 use App\Models\ListEditProfile;
 use App\Models\paketInvestassi;
 use App\Http\Controllers\customerController\refreshSession;
+use App\Models\kontrak_paket;
 
 class customerController extends Controller
 {
@@ -90,7 +91,7 @@ class customerController extends Controller
             "an_norek_tujuan"=>$request->an,
             "status_wd"=>1
         ]);
-        Customer::where("username_customer",$dataCustomer['username_customer'])->update(['saldo'=>(int)$dataCustomer['saldo']-(int)$request->jumlahwithdraw]);
+        Customer::where("username_customer",$dataCustomer['username_customer'])->update(['saldo'=>(int)$dataCustomer['saldo']-(int)$withdraw_ammount]);
         $this->refreshSession($dataCustomer['username_customer']);
         return redirect()->back()->with(['success'=>'Berhasil Request Withdraw, Silahkan cek status pada halaman history withdraw']);
         
@@ -137,11 +138,6 @@ class customerController extends Controller
         else {
             $deposit_ammount=(int)$deposit_separate[0];            
         }
-
-        
-        dd(number_format($deposit_ammount));
-
-
         $date=date("dmy");
         $id="DP".$date.$ctrString;                    
         $file=$request->file('img');
@@ -212,8 +208,54 @@ class customerController extends Controller
                 "status"=>1
             ]);
             return redirect()->back()->with(['success'=>'Berhasil Melakukan Request Edit Profile ']);
-        }
-       
+        }       
+    }
+    public function cekPIN($pin){
+        $datacust=Session::get('custLog');
+        return password_verify($pin,$datacust['pin_customer']);
     }
 
+    public function invest(Request $request){
+        $datapaket=paketInvestassi::where('id_paket',$request->idPaketInput)->first();
+        $durasi=$datapaket['durasi_kontrak'];
+        $jumlahData=DB::select("SELECT count(id_transaksi) as jumlah from kontrak_paket WHERE Date(`tanggal_pembelian`)=CURDATE();");
+        $ctr=$jumlahData[0]->jumlah+1;
+        $ctrString="";
+        if($ctr<10){
+            $ctrString="0000".$ctr;
+        }
+        else if($ctr>=10 && $ctr<100){
+            $ctrString="000".$ctr;
+        }
+        else if($ctr>=100 && $ctr<1000){
+            $ctrString="00".$ctr;
+        }
+        else if($ctr>=1000 && $ctr<10000){
+            $ctrString="0".$ctr;
+        }
+        else if($ctr>=10000 && $ctr<100000){
+            $ctrString="".$ctr;
+        }
+        $date=date("dmy"); 
+        $plusmonth="+".$durasi." month";        
+        $expired = date("Y-m-d H:i:s", strtotime($plusmonth));    
+        $id="TRX".$date.$ctrString;           
+        kontrak_paket::insert([
+            "id_transaksi"=>$id,
+            "username_cust"=> Session::get('custLog')['username_customer'],
+            "id_paket"=>$request->idPaketInput,
+            "tanggal_expired"=>$expired,
+            "jumlah_investasi"=>$request->jumlahInvest,
+            "status"=>1,            
+        ]);        
+        Customer::where("username_customer",Session::get('custLog')['username_customer'])->update(['saldo'=>(int)Session::get('custLog')['saldo']-(int)$request->jumlahInvest]);
+        $this->refreshSession(Session::get('custLog')['username_customer']);
+        return redirect()->route('hisInvest');
+    }
+    public function hisInvestPage(){ 
+        // dd(Session::get('custLog'));
+        $data=kontrak_paket::where('username_cust',Session::get('custLog')['username_customer'])->get(); 
+        $datapaket=paketInvestassi::get();      
+        return view('historyInvest',["data"=>$data,"dataPaket"=>$datapaket]);
+    }
 }

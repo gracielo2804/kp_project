@@ -60,8 +60,14 @@ Route::middleware("authCustomer")->group(function(){
     //Deposit
     Route::get('/deposit','customerController@depositPage')->name('deposit');
     Route::post('/deposit','customerController@deposit');
+
+    Route::get('/invest','customerController@investPage')->name('invest');
+    Route::post('/invest','customerController@invest');
+    Route::get('/hisInvest','customerController@hisInvestPage')->name('hisInvest');
+
     Route::get('/withdraw','customerController@withdrawPage')->name('withdraw');
     Route::post('/withdraw','customerController@withdraw');
+    Route::get('/ajaxCekPin/{param}','customerController@cekPIN');
     //HistoryDeposit
     Route::get('/hisDeposit','customerController@hisDepositPage')->name('hisDeposit');
 

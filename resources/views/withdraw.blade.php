@@ -5,6 +5,9 @@
             visibility: hidden;
             position: absolute;
         }
+        .error{
+            color: red;
+        }
     </style>
 @endpush
 @section('body')
@@ -25,11 +28,11 @@
             <div class="row mt">
             <div class="col-lg-12">
                 <div class="form-panel">
-                <form class="form-horizontal style-form" method="POST" action="/withdraw">
+                <form class="form-horizontal style-form" method="POST" action="/withdraw" id="formWD">
                     @csrf
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">Withdraw Amount</label>
-                        <div class="col-sm-4">
+                        <div class="col-4">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Rp</div>
@@ -44,7 +47,7 @@
                         Nama Bank : 
                         <div class="select-wrap one-third">
                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                           <select name="nama_bank" id="" class="form-control col-6" placeholder="Keyword search" >
+                           <select name="nama_bank" id="nama_bank" class="form-control col-6" placeholder="Keyword search" >
                                 <option value="">Pilih Nama Bank</option>
                                 <option value="BCA">BCA</option>
                                 <option value="Mandiri">Mandiri</option>
@@ -65,137 +68,41 @@
                             <input type="text" class="form-control" name="an" id="an" value='{{$customer['an_customer']}}' required>
                         </div>     
                     </div>     
-                    {{-- <div class="ml-2 col-sm-6">
-                        <div id="msg">Bukti Transfer</div>
-                        <input type="file" name="img" class="file" accept="image/*" id="inputGambar" required>
-                        <div class="input-group my-3">
-                            <input type="text" class="form-control" disabled placeholder="Upload File" id="file" required>
-                            <div class="input-group-append">
-                                <button type="button" class="browse btn btn-primary">Browse...</button>
-                            </div>
-                        </div>
-                    </div> --}}
-                    {{-- <div class="ml-2 col-sm-6">
-                        <a href="#" id="pop"><img src="" id="preview" class="img-thumbnail"></a>
-                    </div> --}}
-                        <div style="padding:30px;">
-                            <button class="btn btn-success" type="submit" id="btnDeposit">Withdraw</button>
-                        </div>
-                </form>
-                </div>                
-                <!-- Creates the bootstrap modal where the image will appear -->
+                    {{-- <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">PIN</label>
+                        <div class="col-6">
+                            <input type="text" class="form-control-lg" name="mycode" id="pincode-input1" >
+                        </div>     
+                    </div>  --}}
+                        <a href="#" id="pop" class="pl-3"><button class="btn btn-success" type="button" id="btnDeposit">Next</button></a>
+                    <!-- Creates the bootstrap modal where the image will appear -->
                 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
+                    <div class="modal-dialog  modal-dialog-centered">
+                        <div class="modal-content modal-content-centered">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+                                <h4 class="modal-title" id="myModalLabel">Input Pin</h4>
                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             </div>
-                            <div class="modal-body">
-                                <center><img src="" id="imagepreview" style="width: 500px; height: 364px; object-fit:contain" ></center>
-                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">PIN</label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control-lg" name="mycode" id="pincode-input2" >
+                                </div>     
+                            </div> 
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" id="submitWD" class="btn btn-success">Withdraw</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
+                    
+                </form>
+                </div>                
+                
+            </div>            
             <!-- col-lg-12-->
             </div>
-            {{-- <div class="row mt">
-                <div class="col-lg-12">
-                <div class="form-panel">
-                    
-                    <h4 class="mb"><i class="fa fa-angle-right"></i>Detail Paket</h4>
-                    <form class="form-horizontal style-form" method="POST" action="addPaket">
-                    @csrf
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                        <span>Hari Ke- 1</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Tanggal</label>
-                        <div class="col-sm-4">
-                            <input type="date" class="form-control">
-                        </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Time</label>
-                            <div class="col-sm-4">
-                            <input type="Time" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Dari</label>
-                            <div class="col-sm-4">
-                            <input type="Text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Tujuan</label>
-                        <div class="col-sm-4">
-                            <input type="Text" class="form-control">
-                        </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Transportasi</label>
-                            <div class="col-sm-4">
-                                <select class="form-control">
-                                    <option>Bis</option>
-                                    <option>Pesawat</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Ini Muncul klo dia pilih Pesawat</label>
-                            <div class="col-sm-4">
-                            <button type="submit" class="btn btn-primary">Pilih Pesawat</button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Hotel</label>
-                            <div class="col-sm-4">
-                            <select class="form-control">
-                                <option>Pilihan sesuai yang ada di database</option>
-                            </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Catatan</label>
-                            <div class="col-sm-4">
-                            <textarea class="form-control" name="message" id="contact-message" placeholder="Your Message" rows="5"></textarea>
-                            </div>
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-danger">Batal</button>
-                            <button type="submit" class="btn btn-success">Tambahkan</button>
-                        </div>
-                    </form>
-                </div>
-                </div>
-                <!-- col-lg-12-->
-            </div>
-            <div class="col-md-12 mt">
-                <div class="content-panel">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Hari Ke-</th>
-                        <th>Tanggal</th>
-                        <th>Dari</th>
-                        <th>Tujuan</th>
-                        <th>Transportasi</th>
-                        <th>Catatan</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                </div>
-            </div> --}}
             <!-- /col-md-12 -->
             </div>
             
@@ -218,6 +125,14 @@
   @push('js')
   <script>
     $(document).ready(function(){    
+        $('#formWD').validate({
+            rules: {
+                nama_bank:"required",
+                norek:"required",
+                an:"required",
+                jumlahwithdraw:"required",
+            },
+        });
         const maximumValueWithdrawal = $('#maximum-value').val();
         const autoNumericOptionsEuro = {
             digitGroupSeparator        : '.',
@@ -230,15 +145,83 @@
             wheelStep                  : 1000,
             decimalPlaces              : 0
         };
+        var pininput="";
         new AutoNumeric(document.getElementById('jumlahwithdraw'), autoNumericOptionsEuro);
         $('#jumlahwithdraw').ForceNumericOnly();  
         $('#norek').ForceNumericOnly();  
         $("#pop").on("click", function() {
             $('#imagepreview').attr('src', $('#preview').attr('src')); // here asign the image to the modal when the user click the enlarge link
             $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-        });         
-     }); 
+        });   
+        $('#submitWD').on('click',function(){
+            if($('#formWD').valid()){
+                $.ajax({
+                    method:'get',
+                    url:'/ajaxCekPin/'+pininput,
+                    success:function(res){      
+                        if(res=="1"){
+                            console.log('sucess');
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Withdraw berhasil dilakukan',
+                                icon: 'success',                               
+                            }).then(function(){
+                                $('#formWD').submit();
+                            });      
+                            // 
+                        }
+                        else{
+                            Swal.fire(
+                            'Failed!',
+                            'PIN yang anda inputkan Salah!',
+                            'error'
+                            );      
+                        }                    
+                    }                
+                });
+            }
+            else{
+                Swal.fire(
+                    'Failed!',
+                    'Harap isi semua form',
+                    'error',
+                    
+                );  
+            }
+            
+        });
+        $('#pincode-input1').pincodeInput({inputs:6,placeholders:"0 0 0 0 0 0",
+            // change: function(input,value,inputnumber){
+            //     console.log("onchange from input number "+inputnumber+", current value: " + value, input);
+            // },
+            keydown:function(e){
 
+            },
+            complete:function(value, e, errorElement){
+                console.log("code entered: " + value);
+                
+                /*do some code checking here*/
+                
+                $(errorElement).html("code entered: " + value);
+            }
+        });
+        $('#pincode-input2').pincodeInput({inputs:6,placeholders:"0 0 0 0 0 0",
+            // change: function(input,value,inputnumber){
+            //     console.log("onchange from input number "+inputnumber+", current value: " + value, input);
+            // },
+            keydown:function(e){
+
+            },
+            complete:function(value, e, errorElement){
+                console.log("code entered: " + value);
+                pininput=value;
+                
+                /*do some code checking here*/
+                
+                $(errorElement).html("code entered: " + value);
+            }
+        });
+     }); 
      jQuery.fn.ForceNumericOnly =
          function()
          {
