@@ -41,13 +41,7 @@
                                 <th>Username Customer</th>
                                 <th>Tanggal Deposit</th>
                                 <th>Jumlah</th>
-                                <th>Bank Customer</th>
-                                <th>No Rekening</th>
-                                <th>Atas Nama</th>
-                                <th>Bank Tujuan</th>
-                                <th>Bukti Transfer</th>
                                 <th>Status</th>
-                                <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -63,44 +57,10 @@
                                             <td>{{ $d->username_cust}}</td>
                                             <td>{{ $d->tanggal_depo}}</td>
                                             <td>@currency($d->jumlah_depo),-</td>
-                                            <td>{{ $d->bank_cust}}</td>
-                                            <td>{{ $d->norek_cust}}</td>
-                                            <td>{{ $d->an_cust}}</td>
-                                            @foreach ($bank as $b)
-                                                @if ($d->id_bank_tujuan == $b->id)
-                                                    <td>{{$b->nama}}</td>
-                                                @endif
-                                            @endforeach
-                                            <td><center><a href="#" id="pop"><img width="250px" height="200px" src="/{{ $d->bukti_trf}}" id="preview" class="img-thumbnail"></a></center></td>
-                                            <!-- The Modal -->
-                                            <div id="myModal" class="modal">
-
-                                                <!-- The Close Button -->
-                                                <span class="close">&times;</span>
-
-                                                <!-- Modal Content (The Image) -->
-                                                <img class="modal-content" id="img01">
-
-                                                <!-- Modal Caption (Image Text) -->
-                                                <div id="caption"></div>
-                                            </div>
                                             <td>Pending</td>
-                                            <form class="form-horizontal style-form" method="POST" action="/admin/pending/deposit/decline" enctype="multipart/form-data">
-                                            @csrf
                                             <td>
-                                                <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon3">Ket</span>
-                                                <input type="text" class="form-control" id="keterangan" name="keterangan" aria-describedby="basic-addon3">
-                                                <input type="text" class="form-control" name="idpaket" id="idpaket" value="{{$d->id_depo}}" hidden>
-                                                <input type="text" class="form-control" name="username" id="username" value="{{$d->username_cust}}" hidden>
-                                                </div>
+                                                <a class="btn btn-warning mt-3" href="/admin/pending/deposit/detail/{{$d->id_depo}}"> <i class="fa fa-info"></i> Detail</a>
                                             </td>
-                                            <td>
-                                                <a class="btn btn-success mt-3" href="/admin/pending/deposit/accept/{{$d->id_depo}}/{{$d->username_cust}}/{{$d->jumlah_depo}}"> <i class="fa fa-check"></i> Accept</a>
-
-                                                <button class="btn btn-danger mt-3" type="submit" id="btnSubmit"><i class="fa fa-times"></i> Decline</button>
-                                            </td>
-                                            </form>
                                         @endif
                                     </tr>
                                 @endforeach
