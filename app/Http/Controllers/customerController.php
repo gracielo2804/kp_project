@@ -98,6 +98,8 @@ class customerController extends Controller
     }
 
     public function hisWithdrawPage(){ 
+        $dataCustomer = Session::get('custLog');
+        $this->refreshSession($dataCustomer['username_customer']);       
         // dd(Session::get('custLog'));
         $data=historyWithdrawal::where('username_cust',Session::get('custLog')['username_customer'])->get();
         return view('historyWithdraw',["data"=>$data]);
@@ -164,13 +166,16 @@ class customerController extends Controller
     }
 
     public function hisDepositPage(){ 
+        $dataCustomer = Session::get('custLog');
+        $this->refreshSession($dataCustomer['username_customer']);       
         // dd(Session::get('custLog'));
         $data=historyDeposit::where('username_cust',Session::get('custLog')['username_customer'])->get();
         $dataBankTujuan=listBank::get();
         return view('historyDeposit',["data"=>$data,"databank"=>$dataBankTujuan]);
     }
     public function editProfilePage(){         
-        $dataCustomer=Session::get('custLog');
+        $dataCustomer = Session::get('custLog');
+        $this->refreshSession($dataCustomer['username_customer']);       
         $dataBankTujuan=listBank::get();
         return view('editProfile',["dataCustomer"=>$dataCustomer]);
     }
@@ -252,8 +257,18 @@ class customerController extends Controller
         $this->refreshSession(Session::get('custLog')['username_customer']);
         return redirect()->route('hisInvest');
     }
+
+    public function investPage(){         
+        $dataCustomer = Session::get('custLog');
+        $this->refreshSession($dataCustomer['username_customer']);       
+        $datapaket=paketInvestassi::where('status',1)->get();
+        return view('invest',["customer"=>$dataCustomer,"dataPaket"=>$datapaket]);
+    }
+
+
     public function hisInvestPage(){ 
-        // dd(Session::get('custLog'));
+        $dataCustomer = Session::get('custLog');
+        $this->refreshSession($dataCustomer['username_customer']);       
         $data=kontrak_paket::where('username_cust',Session::get('custLog')['username_customer'])->get(); 
         $datapaket=paketInvestassi::get();      
         return view('historyInvest',["data"=>$data,"dataPaket"=>$datapaket]);
