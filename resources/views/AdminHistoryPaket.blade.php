@@ -6,15 +6,12 @@
             position: absolute;
         }
         .scrolledTable{ overflow-y: auto; clear:both; }
-        .fa-cog {
-            color: white;
-        }
     </style>
 @endpush
 @section('body')
     <section id="main-content">
         <section class="wrapper">
-            <h3>Daftar Pending Request Edit Profile</h3>
+            <h3>Laporan Penjualan Paket Investasi</h3>
             @if (session()->has("success"))
                 {{-- Kita tampilkan alert success nya! --}}
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -40,34 +37,37 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
-                                <th>Tanggal Request</th>
-                                <th>Username</th>
-                                <th>Nama</th>
-                                <th>Alasan Perubahan</th>
+                                <th>ID Transaksi</th>
+                                <th>Username Customer</th>
+                                <th>Nama Paket</th>
+                                <th>Tanggal Pembelian</th>
+                                <th>Tanggal Expired</th>
+                                <th>Jumlah</th>
                                 <th>Status</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($ecust->count()==0)
-                                <td colspan="12"><center><b>No Data<b></center></td>
+                            @if ($hpaket->count()==0)
+                                <td colspan="13"><center><b>No Data<b></center></td>
                             @else
-                                @foreach($ecust as $e)
+                                @foreach($hpaket as $d)
                                     <tr>
-                                        @if ($e->status == 1)
-                                        <td>{{ $loop->iteration}}</td>
-                                            @foreach ($cust as $d)
-                                                @if ($d->username_customer == $e->username_cust)
-                                                    <td>{{ $e->tanggal}}</td>
-                                                    <td>{{ $e->username_cust}}</td>
-                                                    <td>{{ $d->nama_customer}}</td>
-                                                    <td>{{ $e->keterangan}}</td>
-                                                    <td>Pending</td>
-                                                    <td>
-                                                        <a class="btn btn-warning mt-3" href="/admin/pending/editprofile/detail/{{ $e->username_cust}}"> <i class="fa fa-info"></i> Detail</a>
-                                                    </td>
+                                        @if ($d->status == 1)
+                                            <td>{{ $loop->iteration}}</td>
+                                            <td>{{ $d->id_transaksi}}</td>
+                                            <td>{{ $d->username_cust}}</td>
+                                            @foreach ($paket as $p)
+                                                @if ($d->id_paket == $p->id_paket)
+                                                    <td>{{ $p->nama_paket}}</td>
                                                 @endif
                                             @endforeach
+                                            <td>{{ $d->tanggal_pembelian}}</td>
+                                            <td>{{ $d->tanggal_expired}}</td>
+                                            <td>@currency($d->jumlah_investasi),-</td>
+                                            @if ($d->status == 1)
+                                                <td style="background-color: #b1f0c2">Active</td>
+                                            @else <td style="background-color: #f0776e" >Expired</td>
+                                            @endif
                                         @endif
                                     </tr>
                                 @endforeach
@@ -103,17 +103,6 @@
                 sPaginationType: "full_numbers",
             });
             $('#tbPegawai').wrap("<div class='scrolledTable'></div>");
-         $('#btnDecline').on('click',function(){
-             if(document.getElementById("keterangan").value.length == 0){
-                $('#errorMsg').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                   Keterangan harus di isi!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>`)
-                event.preventDefault();
-             }
-         });
      });
 </script>
 @endpush

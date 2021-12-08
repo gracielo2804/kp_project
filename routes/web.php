@@ -100,24 +100,28 @@ Route::prefix('admin')->group(function () {
         Route::get('/editadmin/{username}','adminController@edit_adminview');
         Route::post('/editadmin/new','adminController@edit_admin');
 
-        Route::get('/customer','adminController@');
+        Route::get('/customer','adminController@list_customer');
+        Route::get('/customer/detail/{username}','adminController@detail_customer');
     });
     Route::prefix('pending')->group(function () {
 
         Route::get('/deposit','adminController@pending_depo');
+        Route::get('/deposit/detail/{id}','adminController@detail_depo');
         Route::get('/deposit/accept/{id}/{username}/{jumlah}','adminController@acc_pending_depo');
-        Route::post('/deposit/decline','adminController@dec_pending_depo');
+        Route::post('/deposit/detail/decline','adminController@dec_pending_depo');
 
         Route::get('/withdrawal','adminController@pending_wd');
+        Route::get('/withdrawal/detail/{id}','adminController@detail_wd');
         Route::post('/withdrawal/accept','adminController@acc_pending_wd');
         Route::post('/withdrawal/decline','adminController@dec_pending_wd');
 
         Route::get('/editprofile','adminController@pending_edit_profile');
+        Route::get('/editprofile/detail/{user}','adminController@detail_edit_profile');
         Route::get('/request/accept/{user}/{pw}/{nama}/{telp}/{email}/{bank}/{rek}/{an}','adminController@acc_pending_edit_profile');
-        Route::post('/request/decline','adminController@dec_pending_edit_profile');
+        Route::post('/editprofile/detail/decline','adminController@dec_pending_edit_profile');
     });
-    Route::get('/laporanpembelian','adminController@');
-    Route::get('/laporanwddepo','adminController@');
+    Route::get('/laporanpembelian','adminController@history_pembelian_paket');
+    Route::get('/laporanwddepo','adminController@history_depo_wd');
     Route::get('/logadmin','adminController@logadmin');
 });
 

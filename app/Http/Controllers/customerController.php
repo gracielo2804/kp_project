@@ -23,9 +23,9 @@ class customerController extends Controller
         Session::put('custLog',$customer);
     }
 
-    public function homePage(){ 
+    public function homePage(){
         $dataCustomer = Session::get('custLog');
-        $this->refreshSession($dataCustomer['username_customer']);        
+        $this->refreshSession($dataCustomer['username_customer']);
         // dd(Session::get('custLog'));
         $dataPaket=paketInvestassi::where('status',1)->get();
         return view('index',["dataPaket"=>$dataPaket]);
@@ -33,7 +33,7 @@ class customerController extends Controller
     public function depositPage(){
         $dataCustomer = Session::get('custLog');
         $this->refreshSession($dataCustomer['username_customer']);
-        $listbank= listBank::where('status',1)->get();        
+        $listbank= listBank::where('status',1)->get();
         return view('deposit')->with(['listBank'=>$listbank]);
     }
 
@@ -64,12 +64,12 @@ class customerController extends Controller
             $ctrString="".$ctr;
         }
         $date=date("dmy");
-        $id="WD".$date.$ctrString;                      
+        $id="WD".$date.$ctrString;
         $withdraw = $request->jumlahwithdraw;
         $withdraw_separate = explode(".", $withdraw);
         $withdraw_ammount=0;
         $ctr_pangkat=0;
-        if(count($withdraw_separate)>1){     
+        if(count($withdraw_separate)>1){
             for ($x = count($withdraw_separate)-1; $x >= 0; $x--) {
                 $temp=$withdraw_separate[$x]*(pow(10,$ctr_pangkat*3));
                 $ctr_pangkat++;
@@ -77,10 +77,10 @@ class customerController extends Controller
             }
         }
         else {
-            $withdraw_ammount=(int)$withdraw_separate[0];            
+            $withdraw_ammount=(int)$withdraw_separate[0];
         }
         $dataCustomer = Session::get('custLog');
-        
+
         // $file->move($tujuanfile,$fileName.".".$fileExtensions);
         historyWithdrawal::insert([
             "id_wd"=> $id,
@@ -94,7 +94,7 @@ class customerController extends Controller
         Customer::where("username_customer",$dataCustomer['username_customer'])->update(['saldo'=>(int)$dataCustomer['saldo']-(int)$withdraw_ammount]);
         $this->refreshSession($dataCustomer['username_customer']);
         return redirect()->back()->with(['success'=>'Berhasil Request Withdraw, Silahkan cek status pada halaman history withdraw']);
-        
+
     }
 
     public function hisWithdrawPage(){ 
@@ -130,7 +130,7 @@ class customerController extends Controller
         $deposit_separate = explode(".", $deposit);
         $deposit_ammount=0;
         $ctr_pangkat=0;
-        if(count($deposit_separate)>1){     
+        if(count($deposit_separate)>1){
             for ($x = count($deposit_separate)-1; $x >= 0; $x--) {
                 $temp=$deposit_separate[$x]*(pow(10,$ctr_pangkat*3));
                 $ctr_pangkat++;
@@ -138,19 +138,19 @@ class customerController extends Controller
             }
         }
         else {
-            $deposit_ammount=(int)$deposit_separate[0];            
+            $deposit_ammount=(int)$deposit_separate[0];
         }
         $date=date("dmy");
-        $id="DP".$date.$ctrString;                    
+        $id="DP".$date.$ctrString;
         $file=$request->file('img');
         if($file==null){
             return redirect()->back()->with(['error','Wajib Upload Bukti Transfer !']);
         }
         $tujuanfile='buktiTransfer';
         $fileExtensions=$file->getClientOriginalExtension();
-        $fileName=$id;        
+        $fileName=$id;
         $dataCustomer = Session::get('custLog');
-        $file->move($tujuanfile,$fileName.".".$fileExtensions);       
+        $file->move($tujuanfile,$fileName.".".$fileExtensions);
         historyDeposit::insert([
             "id_depo"=> $id,
             "username_cust"=>$dataCustomer['username_customer'],
@@ -180,8 +180,8 @@ class customerController extends Controller
         return view('editProfile',["dataCustomer"=>$dataCustomer]);
     }
 
-    public function editProfile(Request $request){ 
-        $pass=$request['passwordsekarang'];        
+    public function editProfile(Request $request){
+        $pass=$request['passwordsekarang'];
         if(!password_verify($pass,Session::get('custLog')['password_customer'])){
             return redirect()->back()->with(['error'=>'Incorrect Password ']);
         }
@@ -196,7 +196,7 @@ class customerController extends Controller
                 }
             }
             if($request->newpassword!=""||$request->newpassword!=null){
-                $pass==password_hash($request->newpassword,PASSWORD_DEFAULT);                
+                $pass==$request->newpassword;
             }
             else{
                 $pass=Session::get('custLog')['password_customer'];
@@ -213,7 +213,7 @@ class customerController extends Controller
                 "status"=>1
             ]);
             return redirect()->back()->with(['success'=>'Berhasil Melakukan Request Edit Profile ']);
-        }       
+        }
     }
     public function cekPIN($pin){
         $datacust=Session::get('custLog');
@@ -241,18 +241,18 @@ class customerController extends Controller
         else if($ctr>=10000 && $ctr<100000){
             $ctrString="".$ctr;
         }
-        $date=date("dmy"); 
-        $plusmonth="+".$durasi." month";        
-        $expired = date("Y-m-d H:i:s", strtotime($plusmonth));    
-        $id="TRX".$date.$ctrString;           
+        $date=date("dmy");
+        $plusmonth="+".$durasi." month";
+        $expired = date("Y-m-d H:i:s", strtotime($plusmonth));
+        $id="TRX".$date.$ctrString;
         kontrak_paket::insert([
             "id_transaksi"=>$id,
             "username_cust"=> Session::get('custLog')['username_customer'],
             "id_paket"=>$request->idPaketInput,
             "tanggal_expired"=>$expired,
             "jumlah_investasi"=>$request->jumlahInvest,
-            "status"=>1,            
-        ]);        
+            "status"=>1,
+        ]);
         Customer::where("username_customer",Session::get('custLog')['username_customer'])->update(['saldo'=>(int)Session::get('custLog')['saldo']-(int)$request->jumlahInvest]);
         $this->refreshSession(Session::get('custLog')['username_customer']);
         return redirect()->route('hisInvest');

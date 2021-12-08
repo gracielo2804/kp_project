@@ -6,15 +6,12 @@
             position: absolute;
         }
         .scrolledTable{ overflow-y: auto; clear:both; }
-        .fa-cog {
-            color: white;
-        }
     </style>
 @endpush
 @section('body')
     <section id="main-content">
         <section class="wrapper">
-            <h3>Daftar Pending Request Edit Profile</h3>
+            <h3>Daftar Customer</h3>
             @if (session()->has("success"))
                 {{-- Kita tampilkan alert success nya! --}}
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -40,35 +37,39 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
-                                <th>Tanggal Request</th>
-                                <th>Username</th>
-                                <th>Nama</th>
-                                <th>Alasan Perubahan</th>
-                                <th>Status</th>
+                                <th>Username Customer</th>
+                                <th>Nama Customer</th>
+                                <th>Telp Customer</th>
+                                <th>Email Customer</th>
+                                <th>Jumlah Saldo</th>
+                                <th>Jumlah Paket Aktif</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($ecust->count()==0)
-                                <td colspan="12"><center><b>No Data<b></center></td>
+                            @if ($customer->count()==0)
+                                <td colspan="13"><center><b>No Data<b></center></td>
                             @else
-                                @foreach($ecust as $e)
+                                @foreach($customer as $d)
                                     <tr>
-                                        @if ($e->status == 1)
                                         <td>{{ $loop->iteration}}</td>
-                                            @foreach ($cust as $d)
-                                                @if ($d->username_customer == $e->username_cust)
-                                                    <td>{{ $e->tanggal}}</td>
-                                                    <td>{{ $e->username_cust}}</td>
-                                                    <td>{{ $d->nama_customer}}</td>
-                                                    <td>{{ $e->keterangan}}</td>
-                                                    <td>Pending</td>
-                                                    <td>
-                                                        <a class="btn btn-warning mt-3" href="/admin/pending/editprofile/detail/{{ $e->username_cust}}"> <i class="fa fa-info"></i> Detail</a>
-                                                    </td>
-                                                @endif
-                                            @endforeach
-                                        @endif
+                                        <td>{{ $d->username_customer}}</td>
+                                        <td>{{ $d->nama_customer}}</td>
+                                        <td>{{ $d->telp_customer}}</td>
+                                        <td>{{ $d->email_customer}}</td>
+                                        <td>@currency( $d->saldo),-</td>
+                                        <?php $jmlhpaket=0;?>
+                                        @foreach ($kontrakpaket as $kp)
+                                            @if ($kp->username_cust == $d->username_customer)
+                                            <?php $jmlhpaket++;?>
+                                            @endif
+                                        @endforeach
+                                        <td>
+                                            {{$jmlhpaket}}
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning mt-3" href="/admin/list/customer/detail/{{$d->username_customer}}"> <i class="fa fa-info"></i> Detail</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -103,17 +104,6 @@
                 sPaginationType: "full_numbers",
             });
             $('#tbPegawai').wrap("<div class='scrolledTable'></div>");
-         $('#btnDecline').on('click',function(){
-             if(document.getElementById("keterangan").value.length == 0){
-                $('#errorMsg').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                   Keterangan harus di isi!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>`)
-                event.preventDefault();
-             }
-         });
      });
 </script>
 @endpush
