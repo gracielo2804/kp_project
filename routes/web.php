@@ -100,7 +100,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/editadmin/{username}','adminController@edit_adminview');
         Route::post('/editadmin/new','adminController@edit_admin');
 
-        Route::get('/customer','adminController@');
+        Route::get('/customer','adminController@list_customer');
+        Route::get('/customer/detail/{username}','adminController@detail_customer');
     });
     Route::prefix('pending')->group(function () {
 
@@ -120,7 +121,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/editprofile/detail/decline','adminController@dec_pending_edit_profile');
     });
     Route::get('/laporanpembelian','adminController@history_pembelian_paket');
-    Route::get('/laporanwddepo','adminController@');
+    Route::get('/laporanwddepo','adminController@history_depo_wd');
     Route::get('/logadmin','adminController@logadmin');
 });
 

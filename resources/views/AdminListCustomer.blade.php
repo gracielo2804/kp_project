@@ -11,7 +11,7 @@
 @section('body')
     <section id="main-content">
         <section class="wrapper">
-            <h3>Laporan Penjualan Paket Investasi</h3>
+            <h3>Daftar Customer</h3>
             @if (session()->has("success"))
                 {{-- Kita tampilkan alert success nya! --}}
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -37,38 +37,39 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
-                                <th>ID Transaksi</th>
                                 <th>Username Customer</th>
-                                <th>Nama Paket</th>
-                                <th>Tanggal Pembelian</th>
-                                <th>Tanggal Expired</th>
-                                <th>Jumlah</th>
-                                <th>Status</th>
+                                <th>Nama Customer</th>
+                                <th>Telp Customer</th>
+                                <th>Email Customer</th>
+                                <th>Jumlah Saldo</th>
+                                <th>Jumlah Paket Aktif</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($hpaket->count()==0)
+                            @if ($customer->count()==0)
                                 <td colspan="13"><center><b>No Data<b></center></td>
                             @else
-                                @foreach($hpaket as $d)
+                                @foreach($customer as $d)
                                     <tr>
-                                        @if ($d->status == 1)
-                                            <td>{{ $loop->iteration}}</td>
-                                            <td>{{ $d->id_transaksi}}</td>
-                                            <td>{{ $d->username_cust}}</td>
-                                            @foreach ($paket as $p)
-                                                @if ($d->id_paket == $p->id_paket)
-                                                    <td>{{ $p->nama_paket}}</td>
-                                                @endif
-                                            @endforeach
-                                            <td>{{ $d->tanggal_pembelian}}</td>
-                                            <td>{{ $d->tanggal_expired}}</td>
-                                            <td>@currency($d->jumlah_investasi),-</td>
-                                            @if ($d->status == 1)
-                                                <td style="background-color: #b1f0c2">Active</td>
-                                            @else <td style="background-color: #f0776e" >Expired</td>
+                                        <td>{{ $loop->iteration}}</td>
+                                        <td>{{ $d->username_customer}}</td>
+                                        <td>{{ $d->nama_customer}}</td>
+                                        <td>{{ $d->telp_customer}}</td>
+                                        <td>{{ $d->email_customer}}</td>
+                                        <td>@currency( $d->saldo),-</td>
+                                        <?php $jmlhpaket=0;?>
+                                        @foreach ($kontrakpaket as $kp)
+                                            @if ($kp->username_cust == $d->username_customer)
+                                            <?php $jmlhpaket++;?>
                                             @endif
-                                        @endif
+                                        @endforeach
+                                        <td>
+                                            {{$jmlhpaket}}
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning mt-3" href="/admin/list/customer/detail/{{$d->username_customer}}"> <i class="fa fa-info"></i> Detail</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif

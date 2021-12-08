@@ -282,6 +282,33 @@ class adminController extends Controller
     }
 
 
+    // CUSTOMER
+    public function list_customer(){
+        $cust =  Customer::get();
+        $paket = kontrak_paket::where("status",1)->get();
+        $param["customer"] = $cust;
+        $param["kontrakpaket"] = $paket;
+        return view('AdminListCustomer')->with($param);
+    }
+    public function detail_customer($username){
+        $cust =  Customer::where("username_customer",$username)->get();
+        $hpaket = kontrak_paket::where("username_cust",$username)->where("status",1)->get();
+        $paket = paketInvestassi::get();
+        $param["customer"] = $cust;
+        $param["hpaket"] = $hpaket;
+        $param["paket"] = $paket;
+        return view('AdminListCustomerDetail')->with($param);
+    }
+
+    public function history_depo_wd(){
+        $hdepo = historyDeposit::get();
+        $hwd = historyWithdrawal::get();
+        $bank = listBank::get();
+        $param["hdepo"] = $hdepo;
+        $param["hwd"] = $hwd;
+        $param["bank"] = $bank;
+        return view('AdminHistoryDepoWd')->with($param);
+    }
     public function history_pembelian_paket(){
         $hpaket = kontrak_paket::get();
         $paket = paketInvestassi::get();
