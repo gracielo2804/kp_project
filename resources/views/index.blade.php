@@ -1,6 +1,9 @@
 @extends('MasterHead')
+@section('investasi')
+	{{$totalInvestasi}}
+@endsection
 @section('body')
-    <div class="hero-wrap js-fullheight" style="background-image: url('asset_sementara/images/index.jpg');">
+    <div class="hero-wrap js-fullheight" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('asset_sementara/images/invest.jpg');">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
@@ -228,7 +231,7 @@
       </div>
     </section> --}}
 	<section class="ftco-section-parallax">
-      <div class="parallax-img d-flex align-items-center">
+      <div class="parallax-img d-flex align-items-center" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('asset_sementara/images/invest.jpg'); background-size:cover;background-position:center 0">
         <div class="container">
           <div class="row d-flex justify-content-center">
 			<div class="col-12 text-center heading-section heading-section-white ftco-animate">
@@ -285,7 +288,27 @@
 					</div>
 				</div>
 			</div>
-		</form>`
+		</form>
+		<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog  modal-dialog-centered">
+				<div class="modal-content modal-content-centered">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Input Pin</h4>
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 col-sm-2 control-label">PIN</label>
+						<div class="col-12">
+							<input type="text" class="form-control-lg" name="mycode" id="pincode-input2" >
+						</div>     
+					</div> 
+					<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<button type="button" id="submitInvest" class="btn btn-success">Confirm</button>
+					</div>
+				</div>
+			</div>
+		</div>
     </section>
 	@push('js')
 	<script>		
@@ -379,13 +402,14 @@
 								confirmButtonText: 'Ya saya yakin'
 								}).then((result) => {
 								if (result.isConfirmed) {
-									Swal.fire(
-									'Berhasil!',
-									'Anda telah melakukan investasi',
-									'success'
-									).then(function(){
-										$('#formInvest').submit();
-									});  ;
+									$('#imagemodal').modal();             
+									// Swal.fire(
+									// 'Berhasil!',
+									// 'Anda telah berhasil melakukan investasi',
+									// 'success'
+									// ).then(function(){
+									// 	$('#formInvest').submit();
+									// });  
 									
 								}
 								
@@ -435,7 +459,51 @@
 					$(div).addClass('d-none')
 				}
 				console.log($(div));							
-            });           
+            });  
+			$('#submitInvest').on('click',function(){
+				var invest=$('#jumlahInvest').val().replace('.','')
+				$.ajax({
+					method:'get',
+					url:'/ajaxCekPin/'+pininput,
+					success:function(res){      
+						if(res=="1"){
+							$('#imagemodal').modal();             
+							Swal.fire(
+							'Berhasil!',
+							'Anda telah berhasil melakukan investasi',
+							'success'
+							).then(function(){
+								$('#formInvest').submit();
+							});  
+
+						}
+						else{
+							Swal.fire(
+							'Failed!',
+							'PIN yang anda inputkan Salah!',
+							'error'
+							);      
+						}                    
+					}                
+				});
+				
+			});
+			$('#pincode-input2').pincodeInput({inputs:6,placeholders:"0 0 0 0 0 0",
+				// change: function(input,value,inputnumber){
+				//     console.log("onchange from input number "+inputnumber+", current value: " + value, input);
+				// },
+				keydown:function(e){
+
+				},
+				complete:function(value, e, errorElement){
+					console.log("code entered: " + value);
+					pininput=value;
+					
+					/*do some code checking here*/
+					
+					$(errorElement).html("code entered: " + value);
+				}
+			});         
 			
 		});
 

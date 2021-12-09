@@ -22,14 +22,41 @@ class customerController extends Controller
         $customer = Customer::where('username_customer',$username)->first();
         Session::put('custLog',$customer);
     }
+    public function landingPage(){
+        if(Session::has('custLogremember')){
+            if(Session::get('custLogremember')){
+                return redirect()->route('homecust');
+            }            
+        }
+        else{
+            Session::remove('custLog');
+            Session::remove('custLogremember');
+            $dataPaket=paketInvestassi::where('status',1)->get();
+            return view('home',["dataPaket"=>$dataPaket]);
+        }
+        Session::remove('custLog');
+        Session::remove('custLogremember');
+        $dataPaket=paketInvestassi::where('status',1)->get();
+        return view('home',["dataPaket"=>$dataPaket]);
+        // dd(Session::get('custLog'));
+        
+    }
 
     public function homePage(){
         $dataCustomer = Session::get('custLog');
         $this->refreshSession($dataCustomer['username_customer']);
         // dd(Session::get('custLog'));
         $dataPaket=paketInvestassi::where('status',1)->get();
-        return view('index',["dataPaket"=>$dataPaket]);
+        $dataInvestasi=kontrak_paket::where('username_cust',$dataCustomer['username_customer'])->get();
+        $totalInvestasi=0;
+        foreach($dataInvestasi as $value){
+            if($value['status']==1){
+                $totalInvestasi+=$value['jumlah_investasi'];
+            }
+        }       
+        return view('index',["dataPaket"=>$dataPaket,"totalInvestasi"=>number_format($totalInvestasi)]);
     }
+    
     public function depositPage(){
         $dataCustomer = Session::get('custLog');
         $this->refreshSession($dataCustomer['username_customer']);
@@ -197,10 +224,12 @@ class customerController extends Controller
             }
             if($request->newpassword!=""||$request->newpassword!=null){
                 $pass==$request->newpassword;
+                $pass=password_hash($pass,PASSWORD_DEFAULT);
             }
             else{
                 $pass=Session::get('custLog')['password_customer'];
             }
+            // dd($pass);
             ListEditProfile::insert([
                 "username_cust"=> $request->username,
                 "nama_cust"=>$request->username,

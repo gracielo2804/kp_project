@@ -265,7 +265,7 @@ class adminController extends Controller
 
     public function acc_pending_edit_profile($username, $pw, $nama, $telp,$email,$bank,$rek,$an){
 
-        $cust = Customer::where("username_customer",$username)->update(['password_customer'=>password_hash($pw,PASSWORD_DEFAULT),"telp_customer"=>$telp,"email_customer"=>$email,"namabank_customer"=>$bank,"norek_customer"=>$rek,"an_customer"=>$an]);
+        $cust = Customer::where("username_customer",$username)->update(['password_customer'=>$pw,"telp_customer"=>$telp,"email_customer"=>$email,"namabank_customer"=>$bank,"norek_customer"=>$rek,"an_customer"=>$an]);
         ListEditProfile::where("username_cust",$username)->where("status",1)->update(["status"=>2]);
         modlog::insert([
             "username_admin"=> session()->get('adminLog'),

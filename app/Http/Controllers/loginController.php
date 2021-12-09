@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use App\Models\ConfirmEmail;
-use PDO;
 
 class loginController extends Controller
 {
     //
     function login(Request $request){
+       
         $username=$request['username'];
         $pass=$request['pass'];
         $customer = Customer::where('username_customer',$username)->first();
@@ -49,6 +49,12 @@ class loginController extends Controller
                 }
                 else{
                     $request->session()->put('custLog',$customer);
+                    if(isset($_POST['checkremember'])){
+                        $request->session()->put('custLogremember',true);
+                    }
+                    else{
+                        $request->session()->put('custLogremember',false);
+                    }
                     return redirect()->route('homecust');
                     //Kalo Customer udh verif
                 }
@@ -80,7 +86,8 @@ class loginController extends Controller
         }
     }
     function logout(){
-        Session::remove('custLog');
+        Session::remove('custLog');   
+        Session::remove('custLogremember');
         Session::remove('adminLog');
         return redirect()->route('loginCustomer');
     }

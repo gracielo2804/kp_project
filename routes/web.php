@@ -127,6 +127,11 @@ Route::middleware("authAdmin")->group(function(){
     });
 });
 
+<<<<<<< HEAD
 Route::get('/', function () {
     return redirect()->route('loginCustomer');
 });
+=======
+
+Route::get('/','customerController@landingPage')->name('landingPage');
+>>>>>>> 14eb345425a223dca66d834af332797a7409b987

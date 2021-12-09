@@ -40,7 +40,7 @@
                             <select name="idPaketInput" id="paketInvestasi" class="form-control" placeholder="Keyword search" >
                                 <option id= "op0" val=0 class="">Silahkan Memilih Paket</option> 
                                 @foreach ($dataPaket as $item=>$values)
-                                    <option value="{{$values->id_paket}}" minim="{{$values->minimal_investasi}}" persentase="{{$values->presentase_profit}}">
+                                    <option value="{{$values->id_paket}}" minim="{{$values->minimal_investasi}}" persentase="{{$values->presentase_profit}}" nama="{{$values->nama_paket}}">
                                         {{"$values->nama_paket"}}</option>
                                  @endforeach                   
                             </select>
@@ -97,22 +97,23 @@
                     </div>  --}}
                         <a href="#" id="pop" class="pl-3"><button class="btn btn-success" type="button" id="btnDeposit">Invest</button></a>
                     <!-- Creates the bootstrap modal where the image will appear -->
-                <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog  modal-dialog-centered">
-                        <div class="modal-content modal-content-centered">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel">Input Pin</h4>
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">PIN</label>
-                                <div class="col-12">
-                                    <input type="text" class="form-control-lg" name="mycode" id="pincode-input2" >
-                                </div>     
-                            </div> 
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="button" id="submitWD" class="btn btn-success">Withdraw</button>
+                    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog  modal-dialog-centered">
+                            <div class="modal-content modal-content-centered">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Input Pin</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-2 control-label">PIN</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control-lg" name="mycode" id="pincode-input2" >
+                                    </div>     
+                                </div> 
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="button" id="submitInvest" class="btn btn-success">Confirm</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -129,6 +130,7 @@
             
             </div>
             </div>
+            
             <!-- /row -->
         </section>
         <!-- /wrapper -->
@@ -138,6 +140,7 @@
     <!--footer start-->
     <!--footer end-->
   </section>
+  
   <!-- js placed at the end of the document so the pages load faster -->
   {{-- <script src="{{asset('asset_sementara/admin/lib/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.min.js')}}"></script> --}}
@@ -164,6 +167,7 @@
                 $('#op0').addClass('d-none');
                 $('#infopaket').removeClass('d-none');
                 var minim=$(this).children('option:selected').attr('minim');
+                var nama=$(this).children('option:selected').attr('nama');
                 console.log(`saldo : ${saldo} - minim: ${minim}`)
                 if(parseInt(minim)>parseInt(saldo)){
                     $('#jumlahInvest').prop('disabled',true);
@@ -199,7 +203,7 @@
             var invest=$('#jumlahInvest').val().replace('.','')
             Swal.fire({
                 title: 'Apakah anda yakin?',
-                text: `Anda akan investasi ${$('#paketInvestasi').val()}
+                text: `Anda akan investasi ${$('#paketInvestasi').children('option:selected').attr('nama')}
                  sebesar Rp. ${new Intl.NumberFormat('de-DE').format(parseInt(invest))}`,
                 icon: 'warning',
                 showCancelButton: true,
@@ -208,19 +212,57 @@
                 confirmButtonText: 'Ya,Saya yakin'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                        'Berhasil!',
-                        `Anda telah investasi ${$('#paketInvestasi').val()}
-                             sebesar Rp. ${new Intl.NumberFormat('de-DE').format(parseInt(invest))}`,
-                        'success'
-                        ).then((result)=>{
-                            $('#jumlahInvest').val(parseInt(invest));
-                            $('#formInvest').submit();
-                        });
+                        $('#imagemodal').modal();                        
                     }
                 })                                
         });
+        $('#submitInvest').on('click',function(){
+            var invest=$('#jumlahInvest').val().replace('.','')
+            $.ajax({
+                method:'get',
+                url:'/ajaxCekPin/'+pininput,
+                success:function(res){      
+                    if(res=="1"){
+                        Swal.fire(
+                        'Berhasil!',
+                        `Anda telah investasi ${$('#paketInvestasi').children('option:selected').attr('nama')}
+                             sebesar Rp. ${new Intl.NumberFormat('de-DE').format(parseInt(invest))}`,
+                        'success'
+                        ).then((result)=>{
+                            $('#jumlahInvest').val(parseInt(invest));                        
+                            $('#formInvest').submit();
+                        });
+                        // 
+                    }
+                    else{
+                        Swal.fire(
+                        'Failed!',
+                        'PIN yang anda inputkan Salah!',
+                        'error'
+                        );      
+                    }                    
+                }                
+            });
+            
+        });
+        $('#pincode-input2').pincodeInput({inputs:6,placeholders:"0 0 0 0 0 0",
+            // change: function(input,value,inputnumber){
+            //     console.log("onchange from input number "+inputnumber+", current value: " + value, input);
+            // },
+            keydown:function(e){
+
+            },
+            complete:function(value, e, errorElement){
+                console.log("code entered: " + value);
+                pininput=value;
+                
+                /*do some code checking here*/
+                
+                $(errorElement).html("code entered: " + value);
+            }
+        });
      }); 
+
      jQuery.fn.ForceNumericOnly =
          function()
          {

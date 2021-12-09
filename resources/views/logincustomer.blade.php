@@ -36,7 +36,7 @@
                 @csrf
                 <div class="form-group">Username : <input type="text" name="username" id="" class='form-control'></div>
                 <div class="form-group">Password : <input type="password" name="pass" id="" class='form-control'></div>     
-                <input type="checkbox" name="checkremember" id="" value="checkremember">Remember Me<br><br>           
+                <input type="checkbox" name="checkremember" id="checkremember" value="checkremember">Remember Me<br><br>           
                 <a href="/register"><button type="button" name="btntoRegister" class="btn btn-info">To Register</button></a>
                 <a href="/loginadmin"><button type="button" name="btntoRegister" class="btn btn-info">To Admin Login</button></a>
                 <a href=""><button type="submit" name="btnLogin" class="btn btn-success">Login</button></a> 
