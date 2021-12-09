@@ -47,7 +47,14 @@ class customerController extends Controller
         $this->refreshSession($dataCustomer['username_customer']);
         // dd(Session::get('custLog'));
         $dataPaket=paketInvestassi::where('status',1)->get();
-        return view('index',["dataPaket"=>$dataPaket]);
+        $dataInvestasi=kontrak_paket::where('username_cust',$dataCustomer['username_customer'])->get();
+        $totalInvestasi=0;
+        foreach($dataInvestasi as $value){
+            if($value['status']==1){
+                $totalInvestasi+=$value['jumlah_investasi'];
+            }
+        }       
+        return view('index',["dataPaket"=>$dataPaket,"totalInvestasi"=>number_format($totalInvestasi)]);
     }
     
     public function depositPage(){

@@ -1,4 +1,7 @@
 @extends('MasterHead')
+@section('investasi')
+	{{$totalInvestasi}}
+@endsection
 @section('body')
     <div class="hero-wrap js-fullheight" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('asset_sementara/images/invest.jpg');">
       <div class="overlay"></div>

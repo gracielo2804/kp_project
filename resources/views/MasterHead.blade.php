@@ -52,7 +52,9 @@
                 <li class="nav-item"><a href="/editProfile" class="nav-link">Edit Profile</a></li>
               @endif
               @if (Session::has("custLog"))
-              <li class="nav-item"><p class="nav-link">Hello, {{Session::get('custLog')['nama_customer']}}<br>Saldo : Rp. <span id="saldo">{{Session::get('custLog')['saldo']}}</span></p>
+              <li class="nav-item"><p class="nav-link">Hello, {{Session::get('custLog')['nama_customer']}}
+                <br>Saldo : Rp. <span id="saldo">{{number_format(Session::get('custLog')['saldo'])}}</span>
+                <br>Total Investasi : Rp. <span id="totalInvestasi">@yield('investasi')</span></p>
                 <input type="hidden" id="username" value={{Session::get('custLog')['username_customer']}}>
               </li>
               <li class="nav-item cta"><a href="logout" class="nav-link"><span>Log Out</span></a></li>
