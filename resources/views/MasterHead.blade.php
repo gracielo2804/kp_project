@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('asset_sementara/css/flaticon.css')}}">
     <link rel="stylesheet" href="{{ asset('asset_sementara/css/icomoon.css')}}">
     <link rel="stylesheet" href="{{ asset('asset_sementara/css/style.css')}}">
+    <link href="{{ asset('asset_sementara/css/bootstrap-pincode-input.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('asset_sementara/css/sweetalert2.min.css')}}">
     {{-- <style>
       .input-invest{
@@ -149,6 +150,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 {{-- <script src="{{ asset('asset_sementara/js/google-map.js')}}"></script> --}}
 <script src="{{ asset('asset_sementara/js/main.js')}}"></script>
 <script src="{{ asset('asset_sementara/js/sweetalert2.min.js')}}"></script>
+<script src="{{ asset('asset_sementara/js/bootstrap-pincode-input.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
 <script>
   $(document).ready(function(){

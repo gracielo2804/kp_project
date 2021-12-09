@@ -212,17 +212,7 @@
                 confirmButtonText: 'Ya,Saya yakin'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('#imagemodal').modal();
-
-                        // Swal.fire(
-                        // 'Berhasil!',
-                        // `Anda telah investasi ${$('#paketInvestasi').children('option:selected').attr('nama')}
-                        //      sebesar Rp. ${new Intl.NumberFormat('de-DE').format(parseInt(invest))}`,
-                        // 'success'
-                        // ).then((result)=>{
-                        //     $('#jumlahInvest').val(parseInt(invest));                        
-                        //     $('#formInvest').submit();
-                        // });
+                        $('#imagemodal').modal();                        
                     }
                 })                                
         });
