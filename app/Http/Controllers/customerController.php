@@ -197,10 +197,12 @@ class customerController extends Controller
             }
             if($request->newpassword!=""||$request->newpassword!=null){
                 $pass==$request->newpassword;
+                $pass=password_hash($pass,PASSWORD_DEFAULT);
             }
             else{
                 $pass=Session::get('custLog')['password_customer'];
             }
+            // dd($pass);
             ListEditProfile::insert([
                 "username_cust"=> $request->username,
                 "nama_cust"=>$request->username,
