@@ -22,6 +22,25 @@ class customerController extends Controller
         $customer = Customer::where('username_customer',$username)->first();
         Session::put('custLog',$customer);
     }
+    public function landingPage(){
+        if(Session::has('custLogremember')){
+            if(Session::get('custLogremember')){
+                return redirect()->route('homecust');
+            }            
+        }
+        else{
+            Session::remove('custLog');
+            Session::remove('custLogremember');
+            $dataPaket=paketInvestassi::where('status',1)->get();
+            return view('home',["dataPaket"=>$dataPaket]);
+        }
+        Session::remove('custLog');
+        Session::remove('custLogremember');
+        $dataPaket=paketInvestassi::where('status',1)->get();
+        return view('home',["dataPaket"=>$dataPaket]);
+        // dd(Session::get('custLog'));
+        
+    }
 
     public function homePage(){
         $dataCustomer = Session::get('custLog');
@@ -30,6 +49,7 @@ class customerController extends Controller
         $dataPaket=paketInvestassi::where('status',1)->get();
         return view('index',["dataPaket"=>$dataPaket]);
     }
+    
     public function depositPage(){
         $dataCustomer = Session::get('custLog');
         $this->refreshSession($dataCustomer['username_customer']);

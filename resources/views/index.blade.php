@@ -1,6 +1,6 @@
 @extends('MasterHead')
 @section('body')
-    <div class="hero-wrap js-fullheight" style="background-image: url('asset_sementara/images/index.jpg');">
+    <div class="hero-wrap js-fullheight" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('asset_sementara/images/invest.jpg');">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
@@ -228,7 +228,7 @@
       </div>
     </section> --}}
 	<section class="ftco-section-parallax">
-      <div class="parallax-img d-flex align-items-center">
+      <div class="parallax-img d-flex align-items-center" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('asset_sementara/images/invest.jpg'); background-size:cover;background-position:center 0">
         <div class="container">
           <div class="row d-flex justify-content-center">
 			<div class="col-12 text-center heading-section heading-section-white ftco-animate">

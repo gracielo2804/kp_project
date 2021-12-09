@@ -16,9 +16,23 @@ class authCustomer
      */
     public function handle($request, Closure $next)
     {
+        // if(Session::has('custLogremember')){
+        //     if(Session::get('custLogrember')){
+        //         return $next($request);
+        //     }
+        //     else{
+        //         return redirect()->route('loginCustomer')->with(['error'=>'You Must Login First !']);
+        //     }
+        // }
+        // else{
+        //     return redirect()->route('loginCustomer')->with(['error'=>'You Must Login First !']);
+        // }
         if(!Session::has('custLog')){
             return redirect()->route('loginCustomer')->with(['error'=>'You Must Login First !']);
         }
-        return $next($request);
+        else{
+            return $next($request);
+        }
+        
     }
 }

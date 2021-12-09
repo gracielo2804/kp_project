@@ -41,24 +41,9 @@
             <span class="oi oi-menu"></span> Menu
           </button>
           <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
-              
-              @if (Session::has("custLog"))
-                <li class="nav-item"><a href="/homecust" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="/invest" class="nav-link">Invest</a></li>
-                <li class="nav-item"><a href="/deposit" class="nav-link">Deposit</a></li>
-                <li class="nav-item"><a href="/withdraw" class="nav-link">Withdraw</a></li>
-                <li class="nav-item"><a href="/editProfile" class="nav-link">Edit Profile</a></li>
-              @endif
-              @if (Session::has("custLog"))
-              <li class="nav-item"><p class="nav-link">Hello, {{Session::get('custLog')['nama_customer']}}<br>Saldo : Rp. <span id="saldo">{{Session::get('custLog')['saldo']}}</span></p>
-                <input type="hidden" id="username" value={{Session::get('custLog')['username_customer']}}>
-              </li>
-              <li class="nav-item cta"><a href="logout" class="nav-link"><span>Log Out</span></a></li>
-              @else
+            <ul class="navbar-nav ml-auto">                        
               <li class="nav-item cta"><a href="logincust" class="nav-link"><span>Login</span></a></li>              
-              <li class="nav-item cta ml-3"><a href="register" class="nav-link"><span>Register</span></a></li>
-              @endif
+              <li class="nav-item cta ml-3"><a href="register" class="nav-link"><span>Register</span></a></li>            
             </ul>
           </div>
         </div>

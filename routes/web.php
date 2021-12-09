@@ -126,6 +126,4 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::get('/', function () {
-    return redirect()->route('loginCustomer');
-});
+Route::get('/','customerController@landingPage')->name('landingPage');
