@@ -9,9 +9,11 @@ use App\Models\historyWithdrawal;
 use App\Models\ListEditProfile;
 use App\Models\modlog;
 use App\Models\Admin;
+use App\Models\dividen;
 use App\Models\kontrak_paket;
 use App\Models\paketInvestassi;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class adminController extends Controller
 {
@@ -285,6 +287,8 @@ class adminController extends Controller
     // CUSTOMER
     public function list_customer(){
         $cust =  Customer::get();
+        $carbon = Carbon::now()->format('Y-m-d');
+        kontrak_paket::where("tanggal_expired", '<', $carbon)->update(['status'=>2]);
         $paket = kontrak_paket::where("status",1)->get();
         $param["customer"] = $cust;
         $param["kontrakpaket"] = $paket;
@@ -292,6 +296,8 @@ class adminController extends Controller
     }
     public function detail_customer($username){
         $cust =  Customer::where("username_customer",$username)->get();
+        $carbon = Carbon::now()->format('Y-m-d');
+        kontrak_paket::where("tanggal_expired", '<', $carbon)->update(['status'=>2]);
         $hpaket = kontrak_paket::where("username_cust",$username)->where("status",1)->get();
         $paket = paketInvestassi::get();
         $param["customer"] = $cust;
@@ -310,11 +316,90 @@ class adminController extends Controller
         return view('AdminHistoryDepoWd')->with($param);
     }
     public function history_pembelian_paket(){
+        $carbon = Carbon::now()->format('Y-m-d');
+        kontrak_paket::where("tanggal_expired", '<', $carbon)->update(['status'=>2]);
         $hpaket = kontrak_paket::get();
         $paket = paketInvestassi::get();
         $param["hpaket"] = $hpaket;
         $param["paket"] = $paket;
         return view('AdminHistoryPaket')->with($param);
+    }
+
+    public function dashboard(){
+        $editprofile = ListEditProfile::where("status",1)->get();
+        $hdepo = historyDeposit::where("status",1)->get();
+        $hwd = historyWithdrawal::where("status_wd",1)->get();
+        $carbon = Carbon::now()->format('Y-m-d');
+        $minggu = date("Y-m-d", strtotime("-7 days"));
+        $bulan = date("Y-m-d", strtotime("-30 days"));
+        $tahun = date("Y-m-d", strtotime("-365 days"));
+        kontrak_paket::where("tanggal_expired", '<', $carbon)->update(['status'=>2]);
+        $hpakettoday = kontrak_paket::whereDate("tanggal_pembelian", $carbon)->get();
+        $hpaketweek = kontrak_paket::whereDate("tanggal_pembelian", ">", $minggu)->get();
+        $hpaketbulan = kontrak_paket::whereDate("tanggal_pembelian", ">", $bulan)->get();
+        $hpakettahun = kontrak_paket::whereDate("tanggal_pembelian", ">", $tahun)->get();
+        $paket = paketInvestassi::get();
+        $hpaket = kontrak_paket::get();
+        $cust =  Customer::get();
+        $dividen = dividen::latest("tanggal_pembagian")->first();
+        $param["customer"] = $cust;
+        $param["hpaket"] = $hpaket;
+        $param["paket"] = $paket;
+        $param["eprofile"] = $editprofile;
+        $param["hdepo"] = $hdepo;
+        $param["hwd"] = $hwd;
+        $param["hpakettoday"] = $hpakettoday;
+        $param["hpaketweek"] = $hpaketweek;
+        $param["hpaketbulan"] = $hpaketbulan;
+        $param["hpakettahun"] = $hpakettahun;
+        $param["dividen"] = $dividen;
+        return view('AdminDashboard')->with($param);
+    }
+    public function dividen(Request $request){
+        $carbon = Carbon::now()->format('Y-m-d');
+        kontrak_paket::where("tanggal_expired", '<', $carbon)->update(['status'=>2]);
+        $hpaket = kontrak_paket::where('status', 1)->get();
+        $cust =  Customer::get();
+        $paket = paketInvestassi::get();
+        $totaluang = 0;
+        $dividen = dividen::latest("tanggal_pembagian")->first();
+        if (date('d') == "10")
+            if ($dividen->tanggal_pembagian->format('m Y') != date('m Y')){
+                foreach ($hpaket as $d) {
+                    $jmlhinvest = 0;
+                    foreach ($cust as $c){
+                        if ($d->username_cust == $c->username_customer) {
+                            $jmlhinvest = $d->jumlah_investasi;
+                            foreach ($paket as $p) {
+                                if ($d->id_paket == $p->id_paket) {
+                                    $totaldividen = $p->presentase_profit * $jmlhinvest / 100;
+                                    $totaluang += $totaldividen;
+                                    $saldo = $c->saldo;
+                                    $totaldividen += $saldo;
+                                    Customer::where("username_customer", $c->username_customer)->update(['saldo'=>$totaldividen]);
+                                    return redirect("/admin/dashboard")->with(['success'=>'Berhasil Membagikan Dividen']);
+                                }
+                            }
+                        }
+                    }
+                }
+                dividen::insert([
+                    "status"=> 2,
+                    "total_pembagian" => $totaluang
+                ]);
+                modlog::insert([
+                    "username_admin"=> session()->get('adminLog'),
+                    "keterangan" => "Membagikan Dividen"
+                ]);
+            }
+            else{
+                return redirect("/admin/dashboard")->with(['error'=>'Tidak Bisa Membagikan Dividen, Karena Dividen Sudah Pernah Di Bagikan Bulan Ini!']);
+            }
+        else{
+            return redirect("/admin/dashboard")->with(['error'=>'Tidak Bisa Membagikan Dividen, Karena Diluar Jadwal']);
+        }
+
+
     }
     // LOG ADMIN
     public function logadmin(){

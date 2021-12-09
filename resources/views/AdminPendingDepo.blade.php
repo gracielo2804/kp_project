@@ -97,7 +97,6 @@
   @push('js')
   <script type="text/javascript">
     $(document).ready(function(){
-
         $("#tbPegawai").DataTable({
                 retrieve: true,
                 paging: true,

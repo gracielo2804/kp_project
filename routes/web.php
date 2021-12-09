@@ -78,53 +78,54 @@ Route::middleware("authCustomer")->group(function(){
 
 
 //Admin
+Route::middleware("authAdmin")->group(function(){
+    Route::get('/admin/list/aktifpaket/{id}','adminController@aktif_paket');
+    Route::get('/admin/list/nonaktifpaket/{id}','adminController@nonaktif_paket');
+    Route::prefix('admin')->group(function () {
+        Route::get('/dashboard','adminController@dashboard');
+        Route::get('/dividen','adminController@dividen');
+        Route::prefix('list')->group(function () {
 
-Route::get('/admin/list/aktifpaket/{id}','adminController@aktif_paket');
-Route::get('/admin/list/nonaktifpaket/{id}','adminController@nonaktif_paket');
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard','adminController@');
-    Route::prefix('list')->group(function () {
+            Route::get('/paketinvestasi','adminController@listPaket')->name('homeadmin');
+            Route::get('/addpaket','adminController@pageAddPaket');
+            Route::post('addpaket/new','adminController@confAddPaket');
+            Route::get('editpaket/{id}','adminController@edit_paketview');
+            Route::post('editpaket/submit','adminController@edit_paket');
 
-        Route::get('/paketinvestasi','adminController@listPaket')->name('homeadmin');
-        Route::get('/addpaket','adminController@pageAddPaket');
-        Route::post('addpaket/new','adminController@confAddPaket');
-        Route::get('editpaket/{id}','adminController@edit_paketview');
-        Route::post('editpaket/submit','adminController@edit_paket');
+            Route::get('/admin','adminController@listadmin');
 
-        Route::get('/admin','adminController@listadmin');
+            Route::get('/aktifadmin/{username}','adminController@aktif_admin');
+            Route::get('/nonaktifadmin/{username}','adminController@nonaktif_admin');
+            Route::get('/addadmin','adminController@pageAddAdmin');
+            Route::post('/addadmin/new','adminController@add_admin');
+            Route::get('/editadmin/{username}','adminController@edit_adminview');
+            Route::post('/editadmin/new','adminController@edit_admin');
 
-        Route::get('/aktifadmin/{username}','adminController@aktif_admin');
-        Route::get('/nonaktifadmin/{username}','adminController@nonaktif_admin');
-        Route::get('/addadmin','adminController@pageAddAdmin');
-        Route::post('/addadmin/new','adminController@add_admin');
-        Route::get('/editadmin/{username}','adminController@edit_adminview');
-        Route::post('/editadmin/new','adminController@edit_admin');
+            Route::get('/customer','adminController@list_customer');
+            Route::get('/customer/detail/{username}','adminController@detail_customer');
+        });
+        Route::prefix('pending')->group(function () {
 
-        Route::get('/customer','adminController@list_customer');
-        Route::get('/customer/detail/{username}','adminController@detail_customer');
+            Route::get('/deposit','adminController@pending_depo');
+            Route::get('/deposit/detail/{id}','adminController@detail_depo');
+            Route::get('/deposit/accept/{id}/{username}/{jumlah}','adminController@acc_pending_depo');
+            Route::post('/deposit/detail/decline','adminController@dec_pending_depo');
+
+            Route::get('/withdrawal','adminController@pending_wd');
+            Route::get('/withdrawal/detail/{id}','adminController@detail_wd');
+            Route::post('/withdrawal/accept','adminController@acc_pending_wd');
+            Route::post('/withdrawal/decline','adminController@dec_pending_wd');
+
+            Route::get('/editprofile','adminController@pending_edit_profile');
+            Route::get('/editprofile/detail/{user}','adminController@detail_edit_profile');
+            Route::get('/request/accept/{user}/{pw}/{nama}/{telp}/{email}/{bank}/{rek}/{an}','adminController@acc_pending_edit_profile');
+            Route::post('/editprofile/detail/decline','adminController@dec_pending_edit_profile');
+        });
+        Route::get('/laporanpembelian','adminController@history_pembelian_paket');
+        Route::get('/laporanwddepo','adminController@history_depo_wd');
+        Route::get('/logadmin','adminController@logadmin');
     });
-    Route::prefix('pending')->group(function () {
-
-        Route::get('/deposit','adminController@pending_depo');
-        Route::get('/deposit/detail/{id}','adminController@detail_depo');
-        Route::get('/deposit/accept/{id}/{username}/{jumlah}','adminController@acc_pending_depo');
-        Route::post('/deposit/detail/decline','adminController@dec_pending_depo');
-
-        Route::get('/withdrawal','adminController@pending_wd');
-        Route::get('/withdrawal/detail/{id}','adminController@detail_wd');
-        Route::post('/withdrawal/accept','adminController@acc_pending_wd');
-        Route::post('/withdrawal/decline','adminController@dec_pending_wd');
-
-        Route::get('/editprofile','adminController@pending_edit_profile');
-        Route::get('/editprofile/detail/{user}','adminController@detail_edit_profile');
-        Route::get('/request/accept/{user}/{pw}/{nama}/{telp}/{email}/{bank}/{rek}/{an}','adminController@acc_pending_edit_profile');
-        Route::post('/editprofile/detail/decline','adminController@dec_pending_edit_profile');
-    });
-    Route::get('/laporanpembelian','adminController@history_pembelian_paket');
-    Route::get('/laporanwddepo','adminController@history_depo_wd');
-    Route::get('/logadmin','adminController@logadmin');
 });
-
 
 Route::get('/', function () {
     return redirect()->route('loginCustomer');

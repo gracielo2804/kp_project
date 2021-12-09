@@ -96,6 +96,7 @@
     <link href="{{asset('asset_sementara/admin/img/favicon.png')}}" rel="icon">
     <link href="{{asset('asset_sementara/admin/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
     <link href="{{ asset('asset_sementara/admin/lib/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="{{ asset('asset_sementara/admin/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('asset_sementara/admin/lib/bootstrap-fileupload/bootstrap-fileupload.css') }}" />
     <link href="{{ asset('asset_sementara/css/lightbox.css') }}" rel="stylesheet">
@@ -111,10 +112,11 @@
         <!--header start-->
         <header class="header black-bg">
                 <div class="sidebar-toggle-box">
-                    <div color="white" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+                    <div id="navmenu" color="white" class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation" onclick="klikaj()"></div>
+                    <input type="text"  id="navkey" value="Open" hidden>
                 </div>
         <!--logo start-->
-            <a href="/homecust" class="logo"><b>Admin Dashboard</span></b></a>
+            <a href="/homecust" class="logo"><b>ADMIN EXIM TRADERS</span></b></a>
             <!--logo end-->
             <ul class="nav pull-right top-menu">
                 <a class="btn btn-danger btn-sm mt-3" href="/logout">Logout</a>
@@ -126,10 +128,14 @@
             *********************************************************************************************************************************************************** -->
         <!--sidebar start-->
         <aside>
-            <div id="sidebar" class="nav-collapse ">
+            <div id="sidebar" class="nav-collapse " style="display: block">
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
-                    <h5 class="centered">Welcome,Admin {{Session::get('adminLog')}}!</h5>
+                    @if (Session::get('adminLog') == "owner")
+                        <h5 class="centered">Welcome, {{Session::get('adminLog')}}!</h5>
+                    @else
+                        <h5 class="centered">Welcome,Admin {{Session::get('adminLog')}}!</h5>
+                    @endif
                     <li class="sub-menu">
                         <a class="{{ (url()->current() == url("/admin/dashboard")) ? 'active' : '' }}" href="/admin/dashboard">
                         <i class="fa fa-home"></i>
@@ -209,7 +215,7 @@
     <!--footer end-->
     </section>
     <script src="{{ asset('asset_sementara/admin/lib/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>    
+    <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>
     @stack('js')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -236,6 +242,20 @@
             span.onclick = function() {
             modal.style.display = "none";
             }
+            // function klikaj() {
+            //     if(document.getElementById('navkey').value=="Open"){
+            //         $("#sidebar").detach();
+            //         span.appendTo('body');
+            //         document.getElementById('navkey').value='Close';
+            //         event.preventDefault();
+            //     }
+            //     else{
+            //         document.getElementById('sidebar').style.visibility='visible';
+            //         document.getElementById('nav-accordion').style.visibility='visible';
+            //         document.getElementById('navkey').value='Open';
+            //         event.preventDefault();
+            //     }
+            // }
       </script>
     @stack('js')
 </body>
