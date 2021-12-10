@@ -200,7 +200,8 @@
             }            
         });  
         $('#btnDeposit').on('click',function(){
-            var invest=$('#jumlahInvest').val().replace('.','')
+            var invest=$('#jumlahInvest').val().replaceAll('.','')
+            console.log(invest);
             Swal.fire({
                 title: 'Apakah anda yakin?',
                 text: `Anda akan investasi ${$('#paketInvestasi').children('option:selected').attr('nama')}
@@ -217,7 +218,7 @@
                 })                                
         });
         $('#submitInvest').on('click',function(){
-            var invest=$('#jumlahInvest').val().replace('.','')
+            var invest=$('#jumlahInvest').val().replaceAll('.','')
             $.ajax({
                 method:'get',
                 url:'/ajaxCekPin/'+pininput,

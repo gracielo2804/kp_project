@@ -181,7 +181,7 @@ class customerController extends Controller
         historyDeposit::insert([
             "id_depo"=> $id,
             "username_cust"=>$dataCustomer['username_customer'],
-            "jumlah_depo"=>$request->jumlahDeposit,
+            "jumlah_depo"=>$deposit_ammount,
             "bank_cust"=>$dataCustomer["namabank_customer"],
             "norek_cust"=>$dataCustomer["norek_customer"],
             "an_cust"=>$dataCustomer["an_customer"],

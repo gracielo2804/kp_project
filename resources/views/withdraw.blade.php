@@ -37,7 +37,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Rp</div>
                                 </div>
-                                <input type="text" autocomplete="off" class="form-control" name="jumlahwithdraw" id="jumlahwithdraw"  value='{{old('jumlahwithdraw')}}' max={{$customer['saldo']}} required>                                
+                                <input type="text" autocomplete="off" class="form-control" name="jumlahwithdraw" id="jumlahwithdraw"  value='{{old('jumlahwithdraw')}}' }} required>                                
                             </div>
                         </div>
                         <small id="emailHelp" class="form-text text-muted ml-3">Maximum Withdraw Ammount is Rp. {{number_format($customer['saldo'])}}</small>

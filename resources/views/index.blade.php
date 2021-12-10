@@ -400,7 +400,7 @@
 							console.log($('jumlahInvest').val());
 							Swal.fire({
 								title: 'Are you sure?',
-								text: `Anda Akan Investasi sebesar Rp.${result.value.invest}`,
+								text: `Anda Akan Investasi sebesar Rp ${new Intl.NumberFormat('de-DE').format(result.value.invest)}`,
 								// text: `Anda Akan Investasi sebesar Rp.${result.value.invest} ----- ${$('#idPaketInput').val()} ---------  ${$('#jumlahInvest').val()}`,
 								html:``,
 								icon: 'warning',
