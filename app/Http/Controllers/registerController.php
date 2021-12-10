@@ -66,7 +66,7 @@ class registerController extends Controller
                 ->subject('Exim Trader Account Verification');
                 $message->from('kp.project.email@gmail.com','Verifivation Code');
                 });              
-                return redirect()->back();
+                return redirect()->back()->with(['success'=>'Berhasil request ulang kode. Silahkan cek email anda']);
               break;
             case 'submit':
                 $data=ConfirmEmail::where('email',Session::get('verifemail'))->latest()->first();

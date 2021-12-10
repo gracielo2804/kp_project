@@ -13,7 +13,6 @@ class loginController extends Controller
 {
     //
     function login(Request $request){
-       
         $username=$request['username'];
         $pass=$request['pass'];
         $customer = Customer::where('username_customer',$username)->first();

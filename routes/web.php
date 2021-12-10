@@ -23,24 +23,24 @@ Route::get('/logincust', function () {
     else{
         Session::remove('verifemail');
         Session::remove('usernameverif');
-        return view('loginCustomer');
+        return view('loginv2');
     }
 })->name("loginCustomer");
 Route::post('/logincust',  'loginController@login');
 Route::get('/loginadmin', function () {
-    return view('loginadmin');
+    return view('loginadminv2');
 })->name("loginAdmin");
 Route::post('/loginadmin','loginController@loginadmin');
 // Route::post('/login', 'registerController@login');
 Route::post('/register','registerController@register');
 
 Route::get('/register',function(){
-    return view('register');
+    return view('registerv2');
 })->name('register');
 
 Route::get('/verifemail', function () {
     if(Session::has('verifemail')){
-        return view('verifemail');
+        return view('verifemailv2');
     }
     else{
         return redirect()->back();
