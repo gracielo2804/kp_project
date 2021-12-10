@@ -28,6 +28,8 @@
             <div class="row mt">
             <div class="col-lg-12">
                 <div class="form-panel">
+                <input type="hidden" id="rekening_cust" value="{{$customer['norek_customer']}}">
+                <input type="hidden" id="an_rek_cust" value='{{$customer['an_customer']}}'>
                 <form class="form-horizontal style-form" method="POST" action="/withdraw" id="formWD">
                     @csrf
                     <div class="form-group">
@@ -74,7 +76,9 @@
                             <input type="text" class="form-control-lg" name="mycode" id="pincode-input1" >
                         </div>     
                     </div>  --}}
-                        <a href="#" id="pop" class="pl-3"><button class="btn btn-success" type="button" id="btnDeposit">Next</button></a>
+                        {{-- <a href="#" id="pop" class="pl-3"> --}}
+                            <button class="btn btn-success" type="button" id="btnDeposit">Next</button>
+                        {{-- </a> --}}
                     <!-- Creates the bootstrap modal where the image will appear -->
                 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered">
@@ -125,6 +129,38 @@
   @push('js')
   <script>
     $(document).ready(function(){    
+        $('#btnDeposit').on('click',function(){
+            var norekcust=$('#rekening_cust').val();
+            var namarekcust=$('#an_rek_cust').val();
+            if(norekcust==$('#norek').val() && namarekcust==$('#an').val()){
+                alertWD('Anda akan melakukan withdraw ke rekening anda sendiri');
+            }
+            else{
+                alertWD('Ada perbedaan rekening dengan profil anda. Apakah anda ingin tetap melanjutkan ?');
+            }
+        });
+        function alertWD(messages){
+            Swal.fire({
+                title: 'Info',
+                text: messages,
+                icon: 'info',   
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, lanjutkan'                            
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#imagemodal').modal();                    
+                }
+                else{
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Cancel',
+                    text: 'Withdraw Dibatalkan',
+                    })
+                }
+            });                        
+        }
         $('#formWD').validate({
             rules: {
                 nama_bank:"required",
