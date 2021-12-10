@@ -165,7 +165,7 @@
                                                     </div>
                                                     <!-- BASIC FORM ELELEMNTS -->
                                                     <span id="errorMsg"></span>
-                                                    <a class="btn btn-success mt-3" href="/admin/pending/request/accept/{{$e->username_cust}}/{{ $e->password_cust}}/{{$e->nama_cust}}/{{$e->telp_cust}}/{{ $e->email_cust}}/{{ $e->namabank_cust}}/{{ $e->norek_cust}}/{{ $e->an_cust}}"> <i class="fa fa-check"></i> Accept</a>
+                                                    <a class="btn btn-success mt-3" href="/admin/pending/request/accept/{{$e->username_cust}}/{{$e->nama_cust}}/{{$e->telp_cust}}/{{ $e->email_cust}}/{{ $e->namabank_cust}}/{{ $e->norek_cust}}/{{ $e->an_cust}}"> <i class="fa fa-check"></i> Accept</a>
 
                                                     <button class="btn btn-danger mt-3" type="submit" id="btnSubmit"><i class="fa fa-times"></i> Decline</button>
                                                 </div>

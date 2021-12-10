@@ -43,7 +43,7 @@
           </button>
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-              
+
               @if (Session::has("custLog"))
                 <li class="nav-item"><a href="/homecust" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="/invest" class="nav-link">Invest</a></li>
@@ -59,7 +59,7 @@
               </li>
               <li class="nav-item cta"><a href="logout" class="nav-link"><span>Log Out</span></a></li>
               @else
-              <li class="nav-item cta"><a href="logincust" class="nav-link"><span>Login</span></a></li>              
+              <li class="nav-item cta"><a href="logincust" class="nav-link"><span>Login</span></a></li>
               <li class="nav-item cta ml-3"><a href="register" class="nav-link"><span>Register</span></a></li>
               @endif
             </ul>
@@ -110,9 +110,9 @@
               <h2 class="ftco-heading-2">Have a Questions?</h2>
               <div class="block-23 mb-3">
                 <ul>
-                  <li><span class="icon icon-map-marker"></span><span class="text">Jalan Ngagel Jaya Tengah 73-77,Surabaya,Indonesia</span></li>
+                  <li><span class="icon icon-map-marker"></span><span class="text"> Jalan Gang Masjid Baiturrohman, Jombang, Indonesia</span></li>
                   <li><a href="#"><span class="icon icon-phone"></span><span class="text">0315027920</span></a></li>
-                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text"> web_admin@istts.ac.id</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text"> cseximtraders@gmail.com</span></a></li>
                 </ul>
               </div>
           </div>
@@ -162,17 +162,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         $.ajax({
             method:'get',
             url:'/ajaxRefreshSession/'+$('#username').val(),
-            success:function(res){                                                             
-                
-            }                
+            success:function(res){
+
+            }
         });
       }
     });
-    
+
     // console.log('/ajaxRefreshSession/'+$('#username').text());
     // console.log($('#username').text())
-    //  $('#saldo').ready(function(){     
-      
+    //  $('#saldo').ready(function(){
+
     //  })
   });
 </script>

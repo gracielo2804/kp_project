@@ -82,11 +82,11 @@ Route::middleware("authAdmin")->group(function(){
     Route::get('/admin/list/aktifpaket/{id}','adminController@aktif_paket');
     Route::get('/admin/list/nonaktifpaket/{id}','adminController@nonaktif_paket');
     Route::prefix('admin')->group(function () {
-        Route::get('/dashboard','adminController@dashboard');
+        Route::get('/dashboard','adminController@dashboard')->name('homeadmin');
         Route::get('/dividen','adminController@dividen');
         Route::prefix('list')->group(function () {
 
-            Route::get('/paketinvestasi','adminController@listPaket')->name('homeadmin');
+            Route::get('/paketinvestasi','adminController@listPaket');
             Route::get('/addpaket','adminController@pageAddPaket');
             Route::post('addpaket/new','adminController@confAddPaket');
             Route::get('editpaket/{id}','adminController@edit_paketview');
@@ -118,7 +118,7 @@ Route::middleware("authAdmin")->group(function(){
 
             Route::get('/editprofile','adminController@pending_edit_profile');
             Route::get('/editprofile/detail/{user}','adminController@detail_edit_profile');
-            Route::get('/request/accept/{user}/{pw}/{nama}/{telp}/{email}/{bank}/{rek}/{an}','adminController@acc_pending_edit_profile');
+            Route::get('/request/accept/{user}/{nama}/{telp}/{email}/{bank}/{rek}/{an}','adminController@acc_pending_edit_profile');
             Route::post('/editprofile/detail/decline','adminController@dec_pending_edit_profile');
         });
         Route::get('/laporanpembelian','adminController@history_pembelian_paket');

@@ -1,15 +1,15 @@
 @extends('HeaderAdmin')
 @push('css')
-    <style>
-        .file {
-            visibility: hidden;
-            position: absolute;
-        }th, td {
-
-    white-space: nowrap;
-}
-.scrolledTable{ overflow-y: auto; clear:both; }
-    </style>
+<style>
+    .file {
+        visibility: hidden;
+        position: absolute;
+    }
+    th, td {
+        white-space: nowrap;
+    }
+    .scrolledTable{ overflow-y: auto; clear:both; }
+</style>
 @endpush
 @section('body')
     <section id="main-content">
@@ -84,7 +84,11 @@
                                             @endif
                                         @endforeach
                                         @if ($d->bukti_trf != NULL)
-                                            <td><center><a href="#" id="pop" ><img width="250px" height="200px" src="/{{ $d->bukti_trf}}" id="preview" class="img-thumbnail"></a></center></td>
+                                            <td><center>
+                                                <a href="#" class="pop" src="{{asset($d->bukti_trf)}}">
+                                                    <img src="{{asset($d->bukti_trf)}}" id="previeww" class="img-thumbnail" width="150" height="200" alt="Deposit Masih Belum Dikonfirmasi">
+                                                </a>
+                                            </center></td>
                                         @else <td></td>
                                         @endif
                                         <!-- The Modal -->
@@ -135,9 +139,13 @@
                                         <td>{{ $d->tanggal_wd}}</td>
                                         <td>@currency( $d->jumlah_wd),-</td>
                                         <td>Bank : {{$d->bank_tujuan}} <br>No Rek : {{ $d->norek_tujuan}} <br>Atas Nama : {{ $d->an_tujuan}}</td>
-                                        <td><center><a href="#" id="pop" ><img width="250px" height="200px" src="/{{ $d->bukti_trf}}" id="preview" class="img-thumbnail"></a></center></td>
+                                        <td><center>
+                                            <a href="#" class="pop" src="{{asset($d->bukti_trf)}}">
+                                                <img src="{{asset($d->bukti_trf)}}" id="previeww" class="img-thumbnail" width="150" height="200" alt="Withdrawal Masih Belum Di Konfirmasi">
+                                            </a>
+                                        </center></td>
                                         <!-- The Modal -->
-                                        <div id="myModal" class="modal">
+                                        <div id="myModall" class="modal">
                                             <!-- The Close Button -->
                                             <span class="close">&times;</span>
                                             <!-- Modal Content (The Image) -->
@@ -159,7 +167,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="imagemodall" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -167,7 +175,7 @@
                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             </div>
                             <div class="modal-body">
-                                <center><img src="" id="imagepreview" style="width: 500px; height: 364px; object-fit:contain" ></center>
+                                <center><img src="" id="imageprevieww" style="width: 500px; height: 364px; object-fit:contain" ></center>
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -219,8 +227,8 @@
         $('#tbWD').wrap("<div class='scrolledTable'></div>");
         $('#tbWD').parents('div.dataTables_wrapper').first().hide();
          $(".pop").on("click", function() {
-             $('#imagepreview').attr('src', $(this).attr('src')); // here asign the image to the modal when the user click the enlarge link
-             $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+             $('#imageprevieww').attr('src', $(this).attr('src')); // here asign the image to the modal when the user click the enlarge link
+             $('#imagemodall').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
          });
          $('#btnSubmit').on('click',function(){
                 console.log("ini wd");

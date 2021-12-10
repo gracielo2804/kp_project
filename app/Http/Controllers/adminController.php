@@ -263,9 +263,9 @@ class adminController extends Controller
         return view('AdminPendingEditProfileDetail')->with($param);
     }
 
-    public function acc_pending_edit_profile($username, $pw, $nama, $telp,$email,$bank,$rek,$an){
-
-        $cust = Customer::where("username_customer",$username)->update(['password_customer'=>$pw,"telp_customer"=>$telp,"email_customer"=>$email,"namabank_customer"=>$bank,"norek_customer"=>$rek,"an_customer"=>$an]);
+    public function acc_pending_edit_profile($username, $nama, $telp,$email,$bank,$rek,$an){
+        $ecust = ListEditProfile::where("status",1)->where('status',1)->first();
+        $cust = Customer::where("username_customer",$username)->update(['password_customer'=>$ecust->password_cust,"telp_customer"=>$telp,"email_customer"=>$email,"namabank_customer"=>$bank,"norek_customer"=>$rek,"an_customer"=>$an]);
         ListEditProfile::where("username_cust",$username)->where("status",1)->update(["status"=>2]);
         modlog::insert([
             "username_admin"=> session()->get('adminLog'),
@@ -377,7 +377,6 @@ class adminController extends Controller
                                     $saldo = $c->saldo;
                                     $totaldividen += $saldo;
                                     Customer::where("username_customer", $c->username_customer)->update(['saldo'=>$totaldividen]);
-                                    return redirect("/admin/dashboard")->with(['success'=>'Berhasil Membagikan Dividen']);
                                 }
                             }
                         }
@@ -391,6 +390,7 @@ class adminController extends Controller
                     "username_admin"=> session()->get('adminLog'),
                     "keterangan" => "Membagikan Dividen"
                 ]);
+                return redirect("/admin/dashboard")->with(['success'=>'Berhasil Membagikan Dividen']);
             }
             else{
                 return redirect("/admin/dashboard")->with(['error'=>'Tidak Bisa Membagikan Dividen, Karena Dividen Sudah Pernah Di Bagikan Bulan Ini!']);

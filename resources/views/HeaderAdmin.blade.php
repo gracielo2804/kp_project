@@ -99,9 +99,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="{{ asset('asset_sementara/admin/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('asset_sementara/admin/lib/bootstrap-fileupload/bootstrap-fileupload.css') }}" />
-    <link href="{{ asset('asset_sementara/css/lightbox.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset_sementara/css/lightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('asset_sementara/admin/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset_sementara/css/bootstrap-pincode-input.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('asset_sementara/css/sweetalert2.min.css')}}">
     @stack('css')
 </head>
 <body>
@@ -216,12 +216,13 @@
     </section>
     <script src="{{ asset('asset_sementara/admin/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('asset_sementara/admin/lib/bootstrap/js/bootstrap.js') }}"></script>
-    @stack('js')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
+    <script src="{{ asset('asset_sementara/js/bootstrap-pincode-input.js') }}"></script>
+    <script src="{{ asset('asset_sementara/js/jquery.validate.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
     <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-      <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-      <script src="{{ asset('asset_sementara/js/lightbox.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('asset_sementara/js/sweetalert2.min.js')}}"></script>
       <script>
           var modal = document.getElementById("myModal");
 
