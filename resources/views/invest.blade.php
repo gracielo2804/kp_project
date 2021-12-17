@@ -15,6 +15,54 @@
         <section class="wrapper">
             <input type="hidden" name="saldoCust" id=saldoCust value="{{$customer['saldo']}}">
             <h3><!--<i class="fa fa-angle-right"></i> -->Invest</h3>    
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card" style="border-color: #ffba70; border-width:5px 0px 5px 0px;height: 110px;box-shadow: 3px 3px 3px 4px rgba(0, 0, 0, 0.2)">
+                        <div class="card-body">
+                            <div class="d-flex flex-row">
+                                <div class="round round-success" style="background-color: #525252; border-radius:50%; width:40px;height:40px;margin-top:10px; margin-right:15px;">
+                                    <i class="fas fa-file-invoice-dollar fa-lg" style="color: #ffba70; margin-right:20px;margin-left:13px;margin-top:12px;size:50px;"></i>
+                                </div>
+                                <div class="m-l-10 align-self-center" style="margin-top:10px;">
+                                    <h5 class="m-b-0">@currency($customer['saldo']),-</h3>
+                                    <h6 class="text-muted m-b-0" style="margin-top: -10px">Saldo Customer</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card" style="border-color: #ffeccf; border-width:5px 0px 5px 0px;height: 110px;box-shadow: 3px 3px 3px 4px rgba(0, 0, 0, 0.2)">
+                        <div class="card-body">
+                            <div class="d-flex flex-row">
+                                <div class="round round-success" style="background-color: #525252; border-radius:50%; width:40px;height:40px;margin-top:10px; margin-right:15px;">
+                                    <i class="fas fa-donate fa-lg" style="color: #ffeccf; margin-right:20px;margin-left:10px;margin-top:12px;size:50px;"></i>
+                                </div>
+                                <div class="m-l-10 align-self-center" style="margin-top:10px;">                                    
+                                    <h5 class="m-b-0"><span id=persentase_return>-</span> %</h3>
+                                    <h6 class="text-muted m-b-0" style="margin-top: -10px">Persentase Return</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card" style="border-color: #ffeccf; border-width:5px 0px 5px 0px;height: 110px;box-shadow: 3px 3px 3px 4px rgba(0, 0, 0, 0.2)">
+                        <div class="card-body">
+                            <div class="d-flex flex-row">
+                                <div class="round round-success" style="background-color: #525252; border-radius:50%; width:40px;height:40px;margin-top:10px; margin-right:15px;">
+                                    <i class="fas fa-donate fa-lg" style="color: #ffeccf; margin-right:20px;margin-left:10px;margin-top:12px;size:50px;"></i>
+                                </div>
+                                <div class="m-l-10 align-self-center" style="margin-top:10px;">
+                                    <h5 class="m-b-0">Rp. <span id=minim_invest>-</span></h3>
+                                    <h6 class="text-muted m-b-0" style="margin-top: -10px">Minimal Investasi </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             @if (session()->has("success"))
                 {{-- Kita tampilkan alert success nya! --}}
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -61,7 +109,7 @@
                                 <p id="investError" class="text-danger d-none"> Saldo anda tidak mencukupi untuk pembelian paket investasi ini</p>     
                             </div>
                         </div>                        
-                        <p id="emailHelp" class="form-text text-muted ml-3">Saldo Anda saat Ini Rp. {{number_format($customer['saldo'],0,',','.')}}</p>
+                        {{-- <p id="emailHelp" class="form-text text-muted ml-3">Saldo Anda saat Ini Rp. {{number_format($customer['saldo'],0,',','.')}}</p> --}}
                         <input type="hidden" id="maximum-value" value="{{$customer['saldo']}}">
                     </div>
                     {{-- <div class="form-group ml-3">
@@ -158,14 +206,14 @@
             roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
             maximumValue               : maximumValueWithdrawal,
             minimumValue               : 0,
-            wheelStep                  : 1000,
+            wheelStep                  : 50000,
             decimalPlaces              : 0
         };
         var saldo=$('#saldoCust').val();
         $('#paketInvestasi').on('change',function(){
             if($(this).children('option:selected').val()!=0){
                 $('#op0').addClass('d-none');
-                $('#infopaket').removeClass('d-none');
+                // $('#infopaket').removeClass('d-none');
                 var minim=$(this).children('option:selected').attr('minim');
                 var nama=$(this).children('option:selected').attr('nama');
                 console.log(`saldo : ${saldo} - minim: ${minim}`)
@@ -185,6 +233,8 @@
                 var persentase=$(this).children('option:selected').attr('persentase');
                 var text=new Intl.NumberFormat('de-DE').format(minim)
                 $('#minimInvestText').html(text);
+                $('#minim_invest').html(text);
+                $('#persentase_return').html(persentase);
                 $('#returnInvestText').html(persentase);
                 autoNumericOptionsEuro.minimumValue=minim;
                 $('#jumlahInvest').val('');

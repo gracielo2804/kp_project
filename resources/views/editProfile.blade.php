@@ -76,24 +76,23 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Password Baru</label>
-                        <div class="cols-sm-4 ml-3" style="font-size:9pt">* biarkan kosong jika tidak ingin mengganti password</div>
-                        <div class="col-sm-4">
+                        <label class="col-sm-2 col-sm-2 control-label">Password Baru</label>                       
+                        <div class="col-sm-6">
                             <div class="input-group">
-                                <input type="password" class="form-control" name="newpassword" id="newpassword">
-                                
+                                <input type="password" class="form-control col-8" name="newpassword" id="newpassword">                                                                
                             </div>
+                            <div class="col-12" style="font-size:10pt;margin-left:-10px">* biarkan kosong jika tidak ingin mengganti password</div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 col-sm-3  control-label">Konfirmasi Password Baru</label>
-                        <div class="cols-sm-4 ml-3" style="font-size:9pt">* biarkan kosong jika tidak ingin mengganti password</div>
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <input type="password" class="form-control" name="conpassword" id="conpassword" disabled>
                                 <span id='message'></span>
                             </div>
                         </div>
+                        <div class="col-12" style="font-size:10pt;">* biarkan kosong jika tidak ingin mengganti password</div>
                     </div>
                     <div class="form-group ml-3">
                         Nama Bank : 
