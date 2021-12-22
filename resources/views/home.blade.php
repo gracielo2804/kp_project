@@ -33,6 +33,14 @@
           </div>
           <div class="col-md-3 d-flex align-self-stretch ftco-animate">
             <div class="media block-6 services d-block text-center">
+              <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-support"></span></div></div>
+              <div class="media-body p-2 mt-2">
+                <h3 class="heading mb-3">24 Hours Full Support</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-detective"></span></div></div>
               <div class="media-body p-2 mt-2">
                 <h3 class="heading mb-3">Best Investment Company</h3>
@@ -42,13 +50,13 @@
         </div>
       </div>
 	</section>
-    
+
 	<section class="ftco-section-parallax">
       <div class="parallax-img d-flex align-items-center">
         <div class="container">
           <div class="row d-flex justify-content-center">
 			<div class="col-12 text-center heading-section heading-section-white ftco-animate">
-				<h2>Our Invest Package</h2>
+				<h2>Our Investment Package</h2>
 			</div>
 			@foreach ($dataPaket as $item )
 				<div class="card m-3" style="width: 18rem;">
@@ -58,7 +66,7 @@
 						<p class="card-text">Minimum Invest : Rp. <span class="d-none minimInvest" value={{$item->minimal_investasi}}></span>{{number_format($item->minimal_investasi)}}<br>
 							Return : {{$item->presentase_profit}}% <br>
 							Duration : {{$item->durasi_kontrak}} Months
-						</p>						
+						</p>
 						<div class="input-invest d-none" id="inputInvest{{$item->id_paket}}">
 							<form class="form-horizontal style-form" method="POST" action="/invest">
 								@csrf
@@ -69,22 +77,22 @@
 										<div class="input-group-prepend">
 											<div class="input-group-text">Rp</div>
 										</div>
-										<input type="text" autocomplete="off" class="form-control" name="jumlahwithdraw" id="jumlahwithdraw"  value='{{old('jumlahwithdraw')}}' min={{$item->minimal_investasi}}  required>                                
+										<input type="text" autocomplete="off" class="form-control" name="jumlahwithdraw" id="jumlahwithdraw"  value='{{old('jumlahwithdraw')}}' min={{$item->minimal_investasi}}  required>
 									</div>
 									<div class="mt-1">
 										<button type="submit" class="btn btn-success">Submit</button>
 										<button type="button" class="btn btn-danger btn-cancel" value={{$item->id_paket}}>cancel</button>
 									</div>
-									
-								</div>							
+
+								</div>
 							</form>
-						</div>						
+						</div>
 					</div>
 				</div>
 			@endforeach
           </div>
         </div>
-      </div>	   
+      </div>
 	  <form class="form-horizontal style-form d-none" method="POST" action="/invest" id="formInvest">
 		@csrf
 			<div class="form-group">
@@ -102,7 +110,7 @@
 		</form>
     </section>
 	@push('js')
-	<script>		
+	<script>
 		var idbutton="";
 		var idDiv="inputInvest";
 		$(document).ready(function(){
@@ -118,8 +126,8 @@
 				minimumValue               : 0,
 				wheelStep                  : 1000,
 				decimalPlaces              : 0
-			};     
-			$('.btnInvest').on('click',function(){	
+			};
+			$('.btnInvest').on('click',function(){
 				$('#idPaketInput').val($(this).val());
 				console.log(`minim invest ${$(this).attr('minimInvest')} , saldo ${saldo}`);
 				var minimInvest=$(this).attr('minimInvest');
@@ -129,7 +137,7 @@
 						'Saldo Anda tidak mencukupi minimal investasi',
 						'error',
 					);
-				}	
+				}
 				else{
 					Swal.fire({
 						title: 'Invest',
@@ -137,7 +145,7 @@
 						width:'50%',
 						html: `<div class="form-group">
 									<div>
-										<p class="h5"><strong>Paket 1</strong></p>										
+										<p class="h5"><strong>Paket 1</strong></p>
 									</div>
 									<label class="col-4 control-label">Jumlah Investasi</label>
 									<div class="col-12">
@@ -152,21 +160,21 @@
 						confirmButtonText: 'Invest',
 						focusConfirm: false,
 						preConfirm: () => {
-							const investInput = Swal.getPopup().querySelector('#jumlahInvestInput').value		
+							const investInput = Swal.getPopup().querySelector('#jumlahInvestInput').value
 							var investSplit= investInput.split('.');
 							var investDepan=investSplit[0];
 							var ctrpangkat=0;
 							var invest= 0;
-							if(investSplit.length>1){															
+							if(investSplit.length>1){
 								for (let i = investSplit.length-1; i >= 0; i--) {
 									var temp=investSplit[i]*(Math.pow(10,ctrpangkat*3));
 									// console.log(temp);
                 					ctrpangkat++;
-                					invest+=temp;									
+                					invest+=temp;
 								}
 							}
 							else{
-								invest=parseInt(investSplit[0]);            
+								invest=parseInt(investSplit[0]);
 							}
 							console.log(`invest : ${invest} - Saldo : ${saldo} - minimInvest : ${minimInvest}`);
 							if (invest > saldo) {
@@ -181,7 +189,7 @@
 							$('#jumlahInvest').val(result.value.invest);
 							console.log($('idPaketInput').val());
 							console.log($('jumlahInvest').val());
-							Swal.fire({								
+							Swal.fire({
 								title: 'Are you sure?',
 								text: `Anda Akan Investasi sebesar Rp.${result.value.invest}`,
 								// text: `Anda Akan Investasi sebesar Rp.${result.value.invest} ----- ${$('#idPaketInput').val()} ---------  ${$('#jumlahInvest').val()}`,
@@ -200,36 +208,36 @@
 									).then(function(){
 										$('#formInvest').submit();
 									});  ;
-									
+
 								}
-								
+
 							})
 						// Swal.fire(`
 						// 	Login: ${result.value.login}
 						// 	Password: ${result.value.password}
 						// `.trim())
-					})			
-					new AutoNumeric(document.getElementById('jumlahInvestInput'),$(this).attr('minimInvest'), autoNumericOptions);	
+					})
+					new AutoNumeric(document.getElementById('jumlahInvestInput'),$(this).attr('minimInvest'), autoNumericOptions);
 					// idbutton=$(this).val();
 					// idDiv="inputInvest"+idbutton;
 					// var div=document.getElementById(idDiv);
 					// if(div.classList.contains("d-none")){
 					// 	$(this).html("Cancel")
 					// 	$(this).addClass('d-none')
-					// 	$(div).fadeIn();		
+					// 	$(div).fadeIn();
 					// 	$(div).removeClass('d-none')
 					// }
 					// else{
 					// 	$(this).removeClass('d-none')
 					// 	$(this).html("Invest")
-					// 	$(div).fadeOut();		
+					// 	$(div).fadeOut();
 					// 	$(div).addClass('d-none')
-					// }	
-				}											
-            });      
-					
+					// }
+				}
+            });
+
 			$('.btn-cancel').on('click',function(){
-				
+
             	// console.log($(this));
 				idbutton=$(this).val();
 				var btnInvest=document.getElementById("btnInvest"+idbutton);
@@ -238,19 +246,19 @@
 				if(div.classList.contains("d-none")){
 					$(btnInvest).html("Cancel")
 					$(btnInvest).addClass('d-none')
-					$(div).fadeIn();		
+					$(div).fadeIn();
 					$(div).removeClass('d-none')
 				}
-				else{					
+				else{
 					$(btnInvest).fadeIn();
 					$(btnInvest).removeClass('d-none')
 					$(btnInvest).html("Invest")
-					$(div).fadeOut();		
+					$(div).fadeOut();
 					$(div).addClass('d-none')
 				}
-				console.log($(div));							
-            });           
-			
+				console.log($(div));
+            });
+
 		});
 
 	</script>

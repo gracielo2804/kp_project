@@ -210,7 +210,7 @@
                                             </div>
                                             <div class="d-flex flex-row">
                                                 <h6 class="text-muted m-b-0" style="margin-top: -10px">Status : </h6>
-                                                @if (date('d') == "10")
+                                                @if (date('d') == "16")
                                                         @if ($dividen->tanggal_pembagian->format('m Y') != date('m Y'))
                                                             <h6 class="m-b-0" style="margin-top: -10px; margin-left:5px;color:#87d67c">Bisa Membagikan Dividen</h6>
                                                         @else
@@ -222,7 +222,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if (date('d') == "10")
+                                    @if (date('d') == "16")
                                         @if ($dividen->tanggal_pembagian->format('m Y') != date('m Y'))
                                             <a href="/admin/dividen" style="float:right;color:whitesmoke; margin-top:-60px; width:150px; height 30px;border-radius:6%;box-shadow: 3px 3px 3px 4px rgba(0, 0, 0, 0.2); background-color:#2e2e2e; text-align:center"> <i class="fas fa-hand-holding-usd fa-lg" style="color: #FFD700; margin-right: 10px;margin-top:12px;margin-bottom:16px;"></i>Bagi Dividen</a><br>
                                         @else
