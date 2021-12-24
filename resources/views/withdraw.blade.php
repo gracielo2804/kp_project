@@ -253,7 +253,7 @@
                 
                 /*do some code checking here*/
                 
-                $(errorElement).html("code entered: " + value);
+                //$(errorElement).html("code entered: " + value);
             }
         });
         $('#pincode-input2').pincodeInput({inputs:6,placeholders:"0 0 0 0 0 0",
@@ -269,7 +269,7 @@
                 
                 /*do some code checking here*/
                 
-                $(errorElement).html("code entered: " + value);
+                //$(errorElement).html("code entered: " + value);
             }
         });
      }); 

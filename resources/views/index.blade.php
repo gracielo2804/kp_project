@@ -509,7 +509,7 @@
 
 					/*do some code checking here*/
 
-					$(errorElement).html("code entered: " + value);
+					//$(errorElement).html("code entered: " + value);
 				}
 			});
 
