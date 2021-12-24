@@ -363,7 +363,7 @@ class adminController extends Controller
         $paket = paketInvestassi::get();
         $totaluang = 0;
         $dividen = dividen::latest("tanggal_pembagian")->first();
-        if (date('d') == "10")
+        if (date('d') == "16")
             if ($dividen->tanggal_pembagian->format('m Y') != date('m Y')){
                 foreach ($hpaket as $d) {
                     $jmlhinvest = 0;

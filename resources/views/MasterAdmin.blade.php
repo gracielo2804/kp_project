@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-    <title>Admin Pray And Go</title>
+    <title>Customer Exim Traders</title>
 
     <!-- Favicons -->
     <link href="{{asset('asset_sementara/admin/img/favicon.png')}}" rel="icon">
